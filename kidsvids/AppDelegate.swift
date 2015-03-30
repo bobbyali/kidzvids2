@@ -16,6 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+
+        // load first set of videoIDs
+        var playlistCollection = PlaylistCollection()
+        var playlist = playlistCollection.getCurrentPlaylist()
+        var importer = NetworkImporter(playlist: playlist)
+        importer.fetchNextSetOfVideoIDs()
+ 
+        //let rootViewController = GridCollectionViewController(nibName: nil, bundle: nil)
+        let rootViewController = GridCollectionViewController()
+        let frame = UIScreen.mainScreen().bounds
+        self.window = UIWindow(frame: frame)
+        let navController = UINavigationController(rootViewController: rootViewController)
+        self.window?.rootViewController = navController
+        self.window?.backgroundColor = UIColor.blackColor()
+        self.window?.makeKeyAndVisible()
+        
         return true
     }
 
