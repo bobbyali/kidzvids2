@@ -11,14 +11,47 @@ import Snap
 
 class SettingsViewController: UIViewController {
 
+    var playlists: PlaylistCollection = PlaylistCollection.sharedInstance
+    var numTotalPlaylists: Int = 5
+    var labelPlaylists: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        var editView = UIView
         
+        let topPadding = UIEdgeInsetsMake(80, 10, 10, 10)
+        let padding = UIEdgeInsetsMake(10, 10, 10, -50)
+        let superview = self.view
         
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         
+        labelPlaylists = UILabel(frame: CGRectMake(0, 0, 300, 200))
+        labelPlaylists.text = "\(self.playlists.list.count) Playlists out of \(self.numTotalPlaylists) currently used."
+        labelPlaylists.textColor = UIColor.whiteColor()
+        labelPlaylists.font = UIFont(name: "Avenir", size: CGFloat(17))
+        self.view.addSubview(labelPlaylists)
+        
+        labelPlaylists.snp_makeConstraints { make in
+            make.top.equalTo(superview.snp_top).with.offset(topPadding.top)
+            make.left.equalTo(superview.snp_left).with.offset(topPadding.left)
+        }
+        
+        let editPlaylistButton   = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        editPlaylistButton.frame = CGRectMake(0, 0, 300, 200)
+        editPlaylistButton.backgroundColor = UIColor.blackColor()
+        editPlaylistButton.setTitle("Change Playlists", forState: UIControlState.Normal)
+        editPlaylistButton.layer.cornerRadius = 5
+        editPlaylistButton.layer.borderWidth = 1
+        editPlaylistButton.layer.borderColor = UIColor.whiteColor().CGColor
+        editPlaylistButton.addTarget(self, action: "editPlaylistButton:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(editPlaylistButton)
+        
+        editPlaylistButton.snp_makeConstraints { make in
+            make.top.equalTo(self.labelPlaylists.snp_bottom).with.offset(padding.top)
+            make.left.equalTo(superview.snp_left).with.offset(padding.left)
+            make.right.equalTo(superview.snp_right).with.offset(padding.right)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,7 +59,15 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func viewDidAppear(animated: Bool) {
+        self.labelPlaylists.text = "\(self.playlists.list.count) Playlists out of \(self.numTotalPlaylists) currently used."
+        
+    }
+    
+    func editPlaylistButton(sender:UIButton!) {
+        let vc = PlaylistTableViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     /*
     // MARK: - Navigation
 

@@ -23,6 +23,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     var longPressInit = UILongPressGestureRecognizer()
     var longPressFinal = UILongPressGestureRecognizer()
+    var importer: NetworkImporter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +84,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
 
     override func viewWillAppear(animated: Bool) {
         // refresh view with latest videos after returning from settings view controller
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         refreshViewController()
     }
     
@@ -189,6 +191,13 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     // MARK: Events
     func refreshViewController() {
+        
+        var currentPlaylist = self.playlists.getCurrentPlaylist()
+        if currentPlaylist.videoIDs.count == 0 {
+            importer = NetworkImporter(playlist: currentPlaylist)
+            importer.fetchNextSetOfVideoIDs()
+        }
+                
         self.collectionView?.reloadData()
         if let collectionView = self.collectionView {
             collectionView.backgroundColor = UIColor.blackColor()
@@ -222,7 +231,6 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     }
     
     func showLongTouchLoadInProgress(sender: UILongPressGestureRecognizer) {
-        println("aa")
         let touchPosition = sender.locationInView(self.collectionView)
         if sender.state == UIGestureRecognizerState.Began {
             self.settingsLoadBar.setYPos(Int(touchPosition.y))
@@ -237,9 +245,10 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     // a long tap is used to open the settings view controller
     func showLongTouchLoadReady(sender: UILongPressGestureRecognizer) {
-        println("bb")
         if sender.state == UIGestureRecognizerState.Ended {
-            println("settings menu activated")
+            let vc = SettingsViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+
         } else if sender.state == UIGestureRecognizerState.Began {
             self.settingsLoadBar.animateSettingsLoaded()
         }

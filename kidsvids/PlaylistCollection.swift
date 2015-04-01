@@ -12,8 +12,8 @@ import UIKit
 
 class PlaylistCollection {
     
-    let list = [Playlist]()
-    let currentPlaylist:Int
+    var list = [Playlist]()
+    var currentPlaylist:Int
     
     // define as singleton class
     class var sharedInstance: PlaylistCollection {

@@ -12,7 +12,16 @@ class Playlist {
     
     var title: String
     var playlistID: String
+    var isValidPlaylistID: Bool = true
     var videoIDs = [String]()
+    
+    convenience init() {
+        var tempTitle = ""
+        var tempID = ""
+        self.init(title: tempTitle, playlistID: tempID)
+        self.isValidPlaylistID = false
+        println("convenience initialiser used")
+    }
     
     init(title:String, playlistID:String) {
         self.title = title
