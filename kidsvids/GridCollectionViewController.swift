@@ -86,7 +86,16 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         refreshViewController()
     }
     
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        println(size)
+    }
     
+    override func supportedInterfaceOrientations() -> Int {
+        
+        return Int(UIInterfaceOrientationMask.All.rawValue)
+    }
 
     // MARK: UICollectionViewDataSource
 
@@ -94,7 +103,6 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
-
 
      func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
@@ -114,6 +122,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     }
     
     // MARK: Collection view flow delegate
+    
     func collectionView(collectionView: UICollectionView!,
         layout collectionViewLayout: UICollectionViewLayout!,
         sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
@@ -121,9 +130,13 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             let screenWidth = screenSize.width
             let isLandscape = UIApplication.sharedApplication().statusBarOrientation.isLandscape
             if isLandscape {
+                
+                println("landscape")
                 let iconWidth = (screenWidth/2) - 50
                 return CGSize(width: iconWidth, height: iconWidth * 0.77)
             } else {
+                
+                println("portrait")
                 let iconWidth = screenWidth - 50
                 return CGSize(width: iconWidth, height: iconWidth * 0.77)
             }

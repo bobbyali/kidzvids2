@@ -28,7 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let frame = UIScreen.mainScreen().bounds
         self.window = UIWindow(frame: frame)
         let navController = UINavigationController(rootViewController: rootViewController)
-        self.window?.rootViewController = navController
+        //
+        // Test the rotation of the GridCollectionViewController
+        //
+        self.window?.rootViewController = rootViewController
         self.window?.backgroundColor = UIColor.blackColor()
         self.window?.makeKeyAndVisible()
         

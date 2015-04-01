@@ -2,8 +2,6 @@
 Pods
  
 ### Xcode ###
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
 !*.xcworkspace/contents.xcworkspacedata
 **build/
 *.swp
