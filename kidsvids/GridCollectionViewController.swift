@@ -39,12 +39,6 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         collectionView!.backgroundColor = UIColor.blackColor()
         self.view.addSubview(collectionView!)
         
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Do any additional setup after loading the view.
         navigationController?.setNavigationBarHidden(true, animated: false)
         
         infoLabel = UILabel(frame: CGRect(x: 10, y: 10, width: screenSize.width-40, height: 20))
@@ -122,7 +116,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             
             let screenWidth = screenSize.width
             let isLandscape = UIApplication.sharedApplication().statusBarOrientation.isLandscape
-            if isLandscape {
+            if isLandscape || screenWidth > 400 {
                 let iconWidth = (screenWidth/2) - 50
                 return CGSize(width: iconWidth, height: iconWidth * 0.77)
             } else {

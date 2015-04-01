@@ -1,0 +1,16 @@
+# CocoaPods
+Pods
+ 
+### Xcode ###
+!*.xcworkspace/contents.xcworkspacedata
+**build/
+*.swp
+**/*.pbxuser
+*.mode2v3
+*.mode1v3
+**/*.perspectivev*
+.DS_Store
+osx/
+**xcuserdata/
+**/*.xcworkspace
+.xcworkspace
