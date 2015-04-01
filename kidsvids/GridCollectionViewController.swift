@@ -10,7 +10,7 @@ import UIKit
 
 let mySpecialNotificationKey = "com.azukiapps.fetchedVideoIDs"
 
-class GridCollectionViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecognizerDelegate {
+class GridCollectionViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate, NetworkImporterDelegate {
 
     private let reuseIdentifier = "videoCell"
     
@@ -24,6 +24,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     var longPressInit = UILongPressGestureRecognizer()
     var longPressFinal = UILongPressGestureRecognizer()
     var importer: NetworkImporter!
+    var activityIndicatorView: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +43,8 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         navigationController?.setNavigationBarHidden(true, animated: false)
         
         infoLabel = UILabel(frame: CGRect(x: 10, y: 10, width: screenSize.width-40, height: 20))
-        infoLabel.text = "Tap and hold for settings"
+        infoLabel.text = "Tap and hold for settings (wait for green bar)"
+        infoLabel.numberOfLines = 2
         infoLabel.textColor = UIColor.whiteColor()
         infoLabel.textAlignment = NSTextAlignment.Center
         collectionView?.addSubview(infoLabel)
@@ -188,7 +190,14 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         
         var currentPlaylist = self.playlists.getCurrentPlaylist()
         if currentPlaylist.videoIDs.count == 0 {
-            importer = NetworkImporter(playlist: currentPlaylist)
+            importer = NetworkImporter()
+            importer.delegate = self
+            
+            activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+            view.addSubview(activityIndicatorView)
+            activityIndicatorView.center = view.center
+            activityIndicatorView.startAnimating()
+            
             importer.fetchNextSetOfVideoIDs()
         }
                 
@@ -248,4 +257,32 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         }
     }
 
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        var scrollViewHeight = scrollView.frame.size.height;
+        var scrollContentSizeHeight = scrollView.contentSize.height;
+        var scrollOffset = scrollView.contentOffset.y;
+        
+
+        if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
+        {
+            // scrolling hits bottom of screen
+            activityIndicatorView.startAnimating()
+            importer.fetchNextSetOfVideoIDs()
+
+        }
+    }
+    
+    
+    func fetchCompleted(nextPageToken:String?, lastPage:Bool) {
+        if let token = nextPageToken {
+            importer.nextPageToken = token
+        }
+        importer.lastPage = lastPage
+        activityIndicatorView.removeFromSuperview()
+        self.collectionView?.reloadData()
+    }
+ 
+    
+    
 }

@@ -28,9 +28,9 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     override func viewDidAppear(animated: Bool) {
+        self.tableView.reloadData()
         var currentPlaylistID = NSIndexPath(forRow: playlists.currentPlaylist, inSection: 0)
         tableView.selectRowAtIndexPath(currentPlaylistID, animated: false, scrollPosition: UITableViewScrollPosition.None)
-        self.tableView.reloadData()
     }
 
     

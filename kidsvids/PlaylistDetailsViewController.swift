@@ -42,7 +42,10 @@ class PlaylistDetailsViewController: UIViewController {
         if !self.isNewPlaylist {
             playlistTitleField.text = playlists.getCurrentPlaylist().title
         }
-        playlistTitleField.backgroundColor = UIColor.redColor()
+        playlistTitleField.backgroundColor = UIColor.blackColor()
+        playlistTitleField.textColor = UIColor.whiteColor()
+        playlistTitleField.layer.borderWidth = 1
+        playlistTitleField.layer.borderColor = UIColor.whiteColor().CGColor
         self.view.addSubview(playlistTitleField)
         playlistTitleField.snp_makeConstraints { make in
             make.top.equalTo(playlistTitleLabel.snp_bottom).with.offset(padding.top)
@@ -66,7 +69,9 @@ class PlaylistDetailsViewController: UIViewController {
         if !self.isNewPlaylist {
             playlistIDField.text = playlists.getCurrentPlaylist().playlistID
         }
-        playlistIDField.backgroundColor = UIColor.greenColor()
+        playlistIDField.textColor = UIColor.whiteColor()
+        playlistIDField.layer.borderWidth = 1
+        playlistIDField.layer.borderColor = UIColor.whiteColor().CGColor
         self.view.addSubview(playlistIDField)
         playlistIDField.snp_makeConstraints { make in
             make.top.equalTo(playlistIDLabel.snp_bottom).with.offset(padding.top)

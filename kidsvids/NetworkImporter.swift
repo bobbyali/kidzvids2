@@ -7,6 +7,10 @@
 import UIKit
 import AFNetworking
 
+protocol NetworkImporterDelegate {
+    func fetchCompleted(nextPageToken:String?, lastPage:Bool)
+}
+
 class NetworkImporter {
 
     let youtubePlaylistURLPrefix:String = "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId="
@@ -17,24 +21,27 @@ class NetworkImporter {
     var nextPageToken:String?
     var firstPage:Bool = true
     var lastPage:Bool = false
+    var lastPageFetched: Bool = false
     
     var playlists: PlaylistCollection = PlaylistCollection.sharedInstance
+    var delegate: NetworkImporterDelegate?
     
     // MARK: Public Methods
-    init(playlist:Playlist) {
-        //self.playlist = playlist
+    init() {
     }
     
     // starts asynchronous fetch of videoIDs
     func fetchNextSetOfVideoIDs() -> Bool {
-        //self.searchString = youtubePlaylistURLPrefix + self.playlist.playlistID + youtubeKeySuffix
         self.searchString = youtubePlaylistURLPrefix + self.playlists.getCurrentPlaylist().playlistID + youtubeKeySuffix
         if let nextPageToken = self.nextPageToken {
             searchString = searchString + "&pageToken=" + nextPageToken
             queryYoutube(searchString)
         } else if firstPage == true {
             queryYoutube(searchString)
-        }
+        } else if lastPage == true && lastPageFetched == false {
+            lastPageFetched = true
+            queryYoutube(searchString)
+        } // else if lastPageFetched == true then do nothing
         return self.lastPage
     }
     
@@ -60,13 +67,12 @@ class NetworkImporter {
                 }
                 
                 if let nextPageToken = responseObject["nextPageToken"] as? String {
-                    self.nextPageToken = nextPageToken
-                    self.firstPage = false
+                    self.delegate?.fetchCompleted(nextPageToken, lastPage: false)
                 } else if self.firstPage == false {
-                    self.lastPage = true
+                    self.delegate?.fetchCompleted(nil, lastPage: true)
                 }
                 
-                NSNotificationCenter.defaultCenter().postNotificationName(mySpecialNotificationKey, object: nil)
+               // NSNotificationCenter.defaultCenter().postNotificationName(mySpecialNotificationKey, object: nil)
                 
             },
             failure: { (operation: AFHTTPRequestOperation!,error: NSError!) in

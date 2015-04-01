@@ -40,7 +40,7 @@ class SettingsViewController: UIViewController {
         let editPlaylistButton   = UIButton.buttonWithType(UIButtonType.System) as UIButton
         editPlaylistButton.frame = CGRectMake(0, 0, 300, 200)
         editPlaylistButton.backgroundColor = UIColor.blackColor()
-        editPlaylistButton.setTitle("Change Playlists", forState: UIControlState.Normal)
+        editPlaylistButton.setTitle("Change or Edit Playlists", forState: UIControlState.Normal)
         editPlaylistButton.layer.cornerRadius = 5
         editPlaylistButton.layer.borderWidth = 1
         editPlaylistButton.layer.borderColor = UIColor.whiteColor().CGColor
