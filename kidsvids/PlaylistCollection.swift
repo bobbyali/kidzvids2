@@ -14,6 +14,7 @@ class PlaylistCollection {
     
     var list = [Playlist]()
     var currentPlaylist:Int
+    var iconScale:Float = 0.77
     
     // define as singleton class
     class var sharedInstance: PlaylistCollection {

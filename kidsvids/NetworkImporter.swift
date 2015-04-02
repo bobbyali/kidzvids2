@@ -36,9 +36,10 @@ class NetworkImporter {
             searchString = searchString + "&pageToken=" + nextPageToken
             queryYoutube(searchString)
         } else if firstPage == true {
-            queryYoutube(searchString)
             firstPage = false
+            queryYoutube(searchString)
         } // else if lastPage == true then do nothing
+        //println("firstPage=\(self.firstPage) token=\(self.nextPageToken) lastPage=\(self.lastPage)")
         return self.lastPage
     }
     
@@ -56,7 +57,7 @@ class NetworkImporter {
                 if let dataArray = responseObject["items"] as? [AnyObject] {
                     for dataObject in dataArray {
                         if let imageURLString = dataObject.valueForKeyPath("contentDetails.videoId") as? String {
-                            println(imageURLString)
+                            //println(imageURLString)
                             self.playlists.getCurrentPlaylist().videoIDs.append(imageURLString)
                         }
                     }

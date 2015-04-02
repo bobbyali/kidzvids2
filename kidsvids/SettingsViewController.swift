@@ -52,6 +52,47 @@ class SettingsViewController: UIViewController {
             make.left.equalTo(superview.snp_left).with.offset(padding.left)
             make.right.equalTo(superview.snp_right).with.offset(padding.right)
         }
+        
+        var labelSlider = UILabel(frame: CGRectMake(0, 0, 300, 200))
+        labelSlider.text = "Set size of video thumbnails:"
+        labelSlider.textColor = UIColor.whiteColor()
+        labelSlider.font = UIFont(name: "Avenir", size: CGFloat(17))
+        self.view.addSubview(labelSlider)
+
+        labelSlider.snp_makeConstraints { make in
+            make.top.equalTo(editPlaylistButton.snp_bottom).with.offset(padding.top)
+            make.left.equalTo(superview.snp_left).with.offset(padding.left)
+        }
+        
+        var slider = UISlider(frame: CGRectMake(0, 0, 300, 200))
+        slider.addTarget(self, action: "changeImageScale:", forControlEvents: UIControlEvents.ValueChanged)
+        slider.backgroundColor = UIColor.blackColor()
+        slider.minimumValue = 0.2
+        slider.maximumValue = 0.9
+        slider.continuous = true
+        slider.value = self.playlists.iconScale
+        self.view.addSubview(slider)
+        
+        slider.snp_makeConstraints { make in
+            make.top.equalTo(labelSlider.snp_bottom).with.offset(padding.top)
+            make.left.equalTo(superview.snp_left).with.offset(padding.left)
+            make.right.equalTo(superview.snp_right).with.offset(padding.right)
+        }
+        
+        
+        /*
+        CGRect frame = CGRectMake(0.0, 0.0, 200.0, 10.0);
+        UISlider *slider = [[UISlider alloc] initWithFrame:frame];
+        [slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+        [slider setBackgroundColor:[UIColor clearColor]];
+        slider.minimumValue = 0.0;
+        slider.maximumValue = 50.0;
+        slider.continuous = YES;
+        slider.value = 25.0;
+        [self.view addSubview:slider];
+        */
+    
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,14 +109,9 @@ class SettingsViewController: UIViewController {
         let vc = PlaylistTableViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func changeImageScale(sender:UISlider!) {
+        self.playlists.iconScale = sender.value
     }
-    */
 
 }

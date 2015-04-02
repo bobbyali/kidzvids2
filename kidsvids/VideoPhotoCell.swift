@@ -14,9 +14,13 @@ class VideoPhotoCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        videoPhotoCell = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-        contentView.backgroundColor = UIColor.whiteColor()
+        //self.videoPhotoCell = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+        //videoPhotoCell = UIImageView(frame: self.contentView.bounds)
+        self.videoPhotoCell = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: (frame.width * 0.77)))
+        
+        contentView.backgroundColor = UIColor.blackColor()
         contentView.addSubview(videoPhotoCell)
+
     }
     
     required init(coder aDecoder: NSCoder) {

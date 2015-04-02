@@ -26,9 +26,13 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     var importer: NetworkImporter!
     var activityIndicatorView: UIActivityIndicatorView!
     var loadedTwoSetsForiPad: Bool = false
+    var fetchingResults: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
+        //[[UIApplication sharedApplication] setStatusBarHidden:YES];
 
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -39,11 +43,12 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         collectionView!.delegate = self
         collectionView!.registerClass(VideoPhotoCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView!.backgroundColor = UIColor.blackColor()
+        collectionView!.alwaysBounceVertical = true
         self.view.addSubview(collectionView!)
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        infoLabel = UILabel(frame: CGRect(x: 10, y: 10, width: screenSize.width-40, height: 20))
+        infoLabel = UILabel(frame: CGRect(x: 10, y: 0, width: screenSize.width-40, height: 20))
         infoLabel.text = "Tap and hold for settings"
         infoLabel.numberOfLines = 2
         infoLabel.textColor = UIColor.whiteColor()
@@ -71,6 +76,12 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         longPressFinal.numberOfTouchesRequired = 1
         longPressFinal.delegate = self
         self.view.addGestureRecognizer(longPressFinal)
+        
+        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.center = view.center
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.stopAnimating()
 
     }
 
@@ -109,6 +120,9 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         let videoPhotoURL = "http://img.youtube.com/vi/" + playlists.getCurrentPlaylist().videoIDs[indexPath.row] + "/0.jpg"
         cell.backgroundColor = UIColor.blackColor()
         cell.videoPhotoCell.setImageWithURL(NSURL(string: videoPhotoURL ))
+        cell.videoPhotoCell.frame = cell.contentView.bounds;
+        cell.videoPhotoCell.autoresizingMask = UIViewAutoresizing.FlexibleWidth|UIViewAutoresizing.FlexibleHeight;
+            
         return cell
     }
     
@@ -117,7 +131,9 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         layout collectionViewLayout: UICollectionViewLayout!,
         sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
             
-            let screenWidth = screenSize.width
+            let screenWidth = UIScreen.mainScreen().bounds.width//screenSize.width
+            
+            /*
             let isLandscape = UIApplication.sharedApplication().statusBarOrientation.isLandscape
             if isLandscape || screenWidth > 400 {
                 let iconWidth = (screenWidth/2) - 50
@@ -125,7 +141,11 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             } else {
                 let iconWidth = screenWidth - 50
                 return CGSize(width: iconWidth, height: iconWidth * 0.77)
-            }
+            }*/
+            
+            let iconWidth = (screenWidth - 50) * CGFloat(self.playlists.iconScale)
+            return CGSize(width: iconWidth, height: iconWidth * 0.77)
+            
             
     }
     
@@ -193,20 +213,20 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         if currentPlaylist.videoIDs.count == 0 {
             importer = NetworkImporter()
             importer.delegate = self
-            
-            activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-            view.addSubview(activityIndicatorView)
-            activityIndicatorView.center = view.center
             activityIndicatorView.startAnimating()
-            
             importer.fetchNextSetOfVideoIDs()
+        } else {
+            self.collectionView?.reloadData()
         }
         
-                
-        self.collectionView?.reloadData()
         if let collectionView = self.collectionView {
             collectionView.backgroundColor = UIColor.blackColor()
         }
+        
+        /* TRYING TO GET CELL IMAGES TO UPDATE AUTOMATICALLY
+        for cell in self.collectionView?.visibleCells() as [VideoPhotoCell] {
+            cell.updateFrame()
+        }*/
 
         /* BUGGY ROTATION CODE
         let rotation = UIApplication.sharedApplication().statusBarOrientation.rawValue
@@ -265,13 +285,21 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         var scrollContentSizeHeight = scrollView.contentSize.height;
         var scrollOffset = scrollView.contentOffset.y;
         
+        println("viewheight=\(scrollViewHeight) contentHeight=\(scrollContentSizeHeight) Offset=\(scrollOffset)")
+        
 
-        if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
+        if (scrollOffset + scrollViewHeight > (scrollContentSizeHeight-10))
         {
             // scrolling hits bottom of screen
-            print("scrolled to bottom")
-            activityIndicatorView.startAnimating()
-            importer.fetchNextSetOfVideoIDs()
+            println("scrolled to bottom")
+            if !fetchingResults {
+                activityIndicatorView.startAnimating()
+                var isLastPage = importer.fetchNextSetOfVideoIDs()
+                if isLastPage {
+                    activityIndicatorView.stopAnimating()
+                }
+                self.fetchingResults = true
+            }
 
         }
     }
@@ -280,9 +308,9 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     func fetchCompleted(nextPageToken:String?, lastPage:Bool) {
         if let token = nextPageToken {
             importer.nextPageToken = token
-            println("Token: " + token)
+        } else {
+            importer.nextPageToken = nil
         }
-        println("Delegated")
         importer.lastPage = lastPage
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
@@ -291,14 +319,17 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             if self.loadedTwoSetsForiPad == false {
                 self.loadedTwoSetsForiPad = true
                 importer.fetchNextSetOfVideoIDs()
-                println("Dobule fetch!")
             }
         }
         
-        activityIndicatorView.removeFromSuperview()
+        activityIndicatorView.stopAnimating()
+        self.fetchingResults = false
         self.collectionView?.reloadData()
     }
  
+    override func prefersStatusBarHidden() -> Bool {
+        return true;
+    }
     
     
 }
