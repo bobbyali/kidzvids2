@@ -1,10 +1,9 @@
 //
-//  PlayerViewController.swift
-//  kidsvids
+// PlayerViewController.swift
+// Rehan Ali, 2nd April 2015
 //
-//  Created by Bobby on 30/03/2015.
-//  Copyright (c) 2015 Azuki Apps. All rights reserved.
-//
+// View Controller class which loads the selected Youtube
+// video using the YouTube Player CocoaPod.
 
 import UIKit
 import XCDYouTubeKit

@@ -1,10 +1,11 @@
 //
-//  GridCollectionViewController.swift
-//  kidsvids
+// GridCollectionViewController.swift
+// Rehan Ali, 2nd April 2015
 //
-//  Created by Bobby on 30/03/2015.
-//  Copyright (c) 2015 Azuki Apps. All rights reserved.
-//
+// View Controller class which shows a grid of Youtube videos
+// through a controller view container. User can select a video
+// cell to initiate video playback, or do a long press to call the
+// settings screen.
 
 import UIKit
 
@@ -32,11 +33,9 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         super.viewDidLoad()
 
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
-        //[[UIApplication sharedApplication] setStatusBarHidden:YES];
 
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        //layout.itemSize = CGSize(width: 120, height: 90)
         
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         collectionView!.dataSource = self
@@ -54,14 +53,6 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         infoLabel.textColor = UIColor.whiteColor()
         infoLabel.textAlignment = NSTextAlignment.Center
         collectionView?.addSubview(infoLabel)
-        
-        // set up notifications for when YouTube videos finish fetching in background
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: "fetchedVideoIDs:",
-            name: mySpecialNotificationKey,
-            object: nil)
-        
         
         longPressInit = UILongPressGestureRecognizer(target: self, action: "showLongTouchLoadInProgress:")
         longPressInit.minimumPressDuration = 0.5
@@ -94,9 +85,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         // refresh view with latest videos after returning from settings view controller
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         refreshViewController()
-        
     }
-    
     
     override func viewDidLayoutSubviews() {
         // need to do this to get screen bounds to update during rotation
@@ -108,6 +97,10 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         self.settingsLoadBar.maxWidth = Int(self.view.frame.width - 40)
 
         refreshViewController()
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true;
     }
     
 
@@ -144,19 +137,13 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         layout collectionViewLayout: UICollectionViewLayout!,
         sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
             
-            //let screenWidth = UIScreen.mainScreen().bounds.size.width//screenSize.width
-            
-            /*
             let isLandscape = UIApplication.sharedApplication().statusBarOrientation.isLandscape
+            var iconWidth: CGFloat
             if isLandscape {
-                let iconWidth = (screenWidth/3) - 50
-                return CGSize(width: iconWidth, height: iconWidth * 0.77)
+                iconWidth = (self.view.frame.width - 50) * CGFloat(self.playlists.iconScale / 2)
             } else {
-                let iconWidth = screenWidth - 50
-                return CGSize(width: iconWidth, height: iconWidth * 0.77)
-            }*/
-            
-            let iconWidth = (self.view.frame.width - 50) * CGFloat(self.playlists.iconScale)
+                iconWidth = (self.view.frame.width - 50) * CGFloat(self.playlists.iconScale)
+            }
             return CGSize(width: iconWidth, height: iconWidth * 0.77)
             
             
@@ -178,53 +165,15 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             self.navigationController?.pushViewController(vc, animated: true)
     }
     
-
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
-
-    // MARK: Notifications
-    // receive and act on notifications that background video fetch has finished
-    func fetchedVideoIDs(notification: NSNotification) {
-        if notification.name == mySpecialNotificationKey {
-            self.collectionView?.reloadData()
-        }
-    }
     
     // MARK: Events
     func refreshViewController() {
         
         var currentPlaylist = self.playlists.getCurrentPlaylist()
         if currentPlaylist.videoIDs.count == 0 {
+            // fetch videos when presented with an empty playlist
             if !fetchingResults {
+                // prevent multiple fetches when app starts
                 fetchingResults = true
                 importer = NetworkImporter()
                 importer.delegate = self
@@ -238,42 +187,9 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         if let collectionView = self.collectionView {
             collectionView.backgroundColor = UIColor.blackColor()
         }
-        
-
-        /* BUGGY ROTATION CODE
-        let rotation = UIApplication.sharedApplication().statusBarOrientation.rawValue
-        //self.screenSize = UIScreen.mainScreen().bounds
-        self.screenSize = UIScreen.mainScreen().applicationFrame
-        println("Rotated \(rotation) h: \(screenSize.height) w: \(screenSize.width)")
-        infoLabel.frame.size.width = screenSize.width-40
-        */
-        //infoLabel.frame.size.width = UIScreen.mainScreen().bounds.width-40
-        
     }
-
-    /*
-    // BUGGY ROTATION CODE
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
-            println("landscape")
-        } else {
-            println("portraight")
-        }
-        println("Screen width=\(UIScreen.mainScreen().bounds.size.width)")
-        println(size)
-        refreshViewController()
-    }
-
     
-    
-    override func supportedInterfaceOrientations() -> Int {
-        return Int(UIInterfaceOrientationMask.All.rawValue)
-    }
-    */
-    
-    
-    // MARK: Gestures
+    // MARK: Actions
     func gestureRecognizer(UILongPressGestureRecognizer,
         shouldRecognizeSimultaneouslyWithGestureRecognizer:UILongPressGestureRecognizer) -> Bool {
             return true
@@ -301,21 +217,18 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             self.settingsLoadBar.animateSettingsLoaded()
         }
     }
-
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         var scrollViewHeight = scrollView.frame.size.height;
         var scrollContentSizeHeight = scrollView.contentSize.height;
         var scrollOffset = scrollView.contentOffset.y;
-        
-        //println("viewheight=\(scrollViewHeight) contentHeight=\(scrollContentSizeHeight) Offset=\(scrollOffset)")
-        
 
         if (scrollOffset + scrollViewHeight > (scrollContentSizeHeight-10))
         {
             // scrolling hits bottom of screen
-            println("scrolled to bottom")
             if !fetchingResults {
+                // make sure results are only fetched once, if the
+                // scroll-to-bottom action is triggered multiple times
                 activityIndicatorView.startAnimating()
                 var isLastPage = importer.fetchNextSetOfVideoIDs()
                 if isLastPage {
@@ -327,7 +240,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         }
     }
     
-    
+    // MARK: Delegate methods
     func fetchCompleted(nextPageToken:String?, lastPage:Bool) {
         if let token = nextPageToken {
             importer.nextPageToken = token
@@ -349,10 +262,5 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         self.fetchingResults = false
         self.collectionView?.reloadData()
     }
- 
-    override func prefersStatusBarHidden() -> Bool {
-        return true;
-    }
-    
     
 }

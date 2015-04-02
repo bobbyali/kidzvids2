@@ -17,7 +17,6 @@ class NetworkImporter {
     let youtubeKeySuffix:String = "&key=AIzaSyDG2hPqOEDnKeaBW365MCc9KFZVHB8LUYs"
     
     var searchString:String = ""
-    //var playlist:Playlist
     var nextPageToken:String?
     var firstPage:Bool = true
     var lastPage:Bool = false
@@ -39,7 +38,6 @@ class NetworkImporter {
             firstPage = false
             queryYoutube(searchString)
         } // else if lastPage == true then do nothing
-        //println("firstPage=\(self.firstPage) token=\(self.nextPageToken) lastPage=\(self.lastPage)")
         return self.lastPage
     }
     
@@ -68,8 +66,6 @@ class NetworkImporter {
                 } else if self.firstPage == false {
                     self.delegate?.fetchCompleted(nil, lastPage: true)
                 }
-                
-               // NSNotificationCenter.defaultCenter().postNotificationName(mySpecialNotificationKey, object: nil)
                 
             },
             failure: { (operation: AFHTTPRequestOperation!,error: NSError!) in

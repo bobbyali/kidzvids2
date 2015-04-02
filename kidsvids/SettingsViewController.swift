@@ -1,10 +1,9 @@
 //
-//  SettingsViewController.swift
-//  kidsvids
+// SettingsViewController.swift
+// Rehan Ali, 2nd April 2015
 //
-//  Created by Bobby on 30/03/2015.
-//  Copyright (c) 2015 Azuki Apps. All rights reserved.
-//
+// View Controller class which shows a simple page of 
+// settings options for KidsVidz app.
 
 import UIKit
 import Snap
@@ -91,6 +90,7 @@ class SettingsViewController: UIViewController {
         
     }
     
+    // MARK: Buttons and Sliders
     func editPlaylistButton(sender:UIButton!) {
         let vc = PlaylistTableViewController()
         self.navigationController?.pushViewController(vc, animated: true)

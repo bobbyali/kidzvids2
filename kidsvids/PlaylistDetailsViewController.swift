@@ -1,10 +1,9 @@
 //
-//  PlaylistDetailsViewController.swift
-//  kidsvids
+// PlaylistDetailsViewController.swift
+// Rehan Ali, 2nd April 2015
 //
-//  Created by Bobby on 01/04/2015.
-//  Copyright (c) 2015 Azuki Apps. All rights reserved.
-//
+// View Controller class which shows a form for modifying
+// playlist details (title / playlist ID)
 
 import UIKit
 
@@ -88,7 +87,7 @@ class PlaylistDetailsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    // MARK: Buttons
     func savePlaylist(sender:UIButton!) {
         if isNewPlaylist {
             var newPlaylist = Playlist(title: self.playlistTitleField.text, playlistID: self.playlistIDField.text)

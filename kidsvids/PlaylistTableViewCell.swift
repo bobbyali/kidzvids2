@@ -1,10 +1,10 @@
 //
-//  PlaylistTableViewCell.swift
-//  kidsvids
+// PlaylistTableView.swift
+// Rehan Ali, 2nd April 2015
 //
-//  Created by Bobby on 01/04/2015.
-//  Copyright (c) 2015 Azuki Apps. All rights reserved.
-//
+// View class for displaying a table cell on the 
+// playlist table view controller. Each cell contains
+// a title label and an edit button.
 
 import UIKit
 
@@ -63,6 +63,8 @@ class PlaylistTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    // MARK: Buttons
     func buttonAction(sender:UIButton!) {
         println("Edit button selected")
         if var playlistIndex = self.playlistIndex {

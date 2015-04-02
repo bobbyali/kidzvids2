@@ -1,10 +1,9 @@
 //
-//  PlaylistTableViewController.swift
-//  kidsvids
+// PlaylistTableViewController.swift
+// Rehan Ali, 2nd April 2015
 //
-//  Created by Bobby on 31/03/2015.
-//  Copyright (c) 2015 Azuki Apps. All rights reserved.
-//
+// View Controller class which shows a table view of Playlists for 
+// selecting / editing
 
 import UIKit
 
@@ -40,7 +39,6 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     // MARK: - Table view data source
-
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
@@ -74,6 +72,12 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
         self.playlists.currentPlaylist = indexPath.row
     }
     
+    // MARK: Buttons
+    func addPlaylistButton(sender:UIButton!) {
+        let targetVC = PlaylistDetailsViewController()
+        targetVC.isNewPlaylist = true
+        self.navigationController?.pushViewController(targetVC, animated: true)
+    }
     
     // MARK: Delegate methods
     func editButton(playlistIndex:Int) {
@@ -82,9 +86,4 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
         self.navigationController?.pushViewController(targetVC, animated: true)
     }
     
-    func addPlaylistButton(sender:UIButton!) {
-        let targetVC = PlaylistDetailsViewController()
-        targetVC.isNewPlaylist = true
-        self.navigationController?.pushViewController(targetVC, animated: true)
-    }
 }

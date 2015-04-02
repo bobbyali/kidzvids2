@@ -1,10 +1,9 @@
 //
-//  SettingsLoadBar.swift
-//  kidsvids
+// SettingsLoadBar.swift
+// Rehan Ali, 2nd April 2015
 //
-//  Created by Bobby on 30/03/2015.
-//  Copyright (c) 2015 Azuki Apps. All rights reserved.
-//
+// View class for displaying a bar which grows and changes
+// colour the longer the screen is touched.
 
 import UIKit
 
@@ -45,22 +44,3 @@ class SettingsLoadBar: UIView {
     }
 
 }
-
-
-
-/*
-let touchPosition = sender.locationInView(self.collectionView)
-longTouchIndicatorBar.frame = CGRect(x: 20, y: Int(touchPosition.y), width: 0, height: 10)
-
-longTouchIndicatorBar.backgroundColor = UIColor.redColor()
-collectionView?.addSubview(longTouchIndicatorBar)
-UIView.animateWithDuration(2.5, animations: {
-    self.longTouchIndicatorBar.frame.size.width = self.screenSize.width - 40
-})
-
-} else if sender.state == UIGestureRecognizerState.Ended {
-    let touchPosition = sender.locationInView(self.collectionView)
-    longTouchIndicatorBar.frame.size.width = 0
-    longTouchIndicatorBar.removeFromSuperview()
-}
-*/

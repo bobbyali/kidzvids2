@@ -1,10 +1,8 @@
 //
-//  PlaylistCollection.swift
-//  KidzVids
+// PlaylistCollection.swift
+// Rehan Ali, 2nd April 2015
 //
-//  Created by Bobby on 18/03/2015.
-//  Copyright (c) 2015 AzukiApps. All rights reserved.
-//
+// Model class for holding references to multiple Playlist objects.
 
 import UIKit
 
