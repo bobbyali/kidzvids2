@@ -78,21 +78,7 @@ class SettingsViewController: UIViewController {
             make.left.equalTo(superview.snp_left).with.offset(padding.left)
             make.right.equalTo(superview.snp_right).with.offset(padding.right)
         }
-        
-        
-        /*
-        CGRect frame = CGRectMake(0.0, 0.0, 200.0, 10.0);
-        UISlider *slider = [[UISlider alloc] initWithFrame:frame];
-        [slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
-        [slider setBackgroundColor:[UIColor clearColor]];
-        slider.minimumValue = 0.0;
-        slider.maximumValue = 50.0;
-        slider.continuous = YES;
-        slider.value = 25.0;
-        [self.view addSubview:slider];
-        */
-    
-        
+                
     }
 
     override func didReceiveMemoryWarning() {

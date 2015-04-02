@@ -30,7 +30,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
         //[[UIApplication sharedApplication] setStatusBarHidden:YES];
 
@@ -94,8 +94,21 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         // refresh view with latest videos after returning from settings view controller
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         refreshViewController()
+        
     }
     
+    
+    override func viewDidLayoutSubviews() {
+        // need to do this to get screen bounds to update during rotation
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.collectionView?.frame = self.view.frame
+        
+        self.infoLabel.frame.size.width = self.view.frame.width - 40
+        self.settingsLoadBar.maxWidth = Int(self.view.frame.width - 40)
+
+        refreshViewController()
+    }
     
 
     // MARK: UICollectionViewDataSource
@@ -131,19 +144,19 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         layout collectionViewLayout: UICollectionViewLayout!,
         sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
             
-            let screenWidth = UIScreen.mainScreen().bounds.width//screenSize.width
+            //let screenWidth = UIScreen.mainScreen().bounds.size.width//screenSize.width
             
             /*
             let isLandscape = UIApplication.sharedApplication().statusBarOrientation.isLandscape
-            if isLandscape || screenWidth > 400 {
-                let iconWidth = (screenWidth/2) - 50
+            if isLandscape {
+                let iconWidth = (screenWidth/3) - 50
                 return CGSize(width: iconWidth, height: iconWidth * 0.77)
             } else {
                 let iconWidth = screenWidth - 50
                 return CGSize(width: iconWidth, height: iconWidth * 0.77)
             }*/
             
-            let iconWidth = (screenWidth - 50) * CGFloat(self.playlists.iconScale)
+            let iconWidth = (self.view.frame.width - 50) * CGFloat(self.playlists.iconScale)
             return CGSize(width: iconWidth, height: iconWidth * 0.77)
             
             
@@ -211,10 +224,13 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         
         var currentPlaylist = self.playlists.getCurrentPlaylist()
         if currentPlaylist.videoIDs.count == 0 {
-            importer = NetworkImporter()
-            importer.delegate = self
-            activityIndicatorView.startAnimating()
-            importer.fetchNextSetOfVideoIDs()
+            if !fetchingResults {
+                fetchingResults = true
+                importer = NetworkImporter()
+                importer.delegate = self
+                activityIndicatorView.startAnimating()
+                importer.fetchNextSetOfVideoIDs()
+            }
         } else {
             self.collectionView?.reloadData()
         }
@@ -223,10 +239,6 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             collectionView.backgroundColor = UIColor.blackColor()
         }
         
-        /* TRYING TO GET CELL IMAGES TO UPDATE AUTOMATICALLY
-        for cell in self.collectionView?.visibleCells() as [VideoPhotoCell] {
-            cell.updateFrame()
-        }*/
 
         /* BUGGY ROTATION CODE
         let rotation = UIApplication.sharedApplication().statusBarOrientation.rawValue
@@ -235,19 +247,31 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         println("Rotated \(rotation) h: \(screenSize.height) w: \(screenSize.width)")
         infoLabel.frame.size.width = screenSize.width-40
         */
+        //infoLabel.frame.size.width = UIScreen.mainScreen().bounds.width-40
         
     }
 
-    /* BUGGY ROTATION CODE
+    /*
+    // BUGGY ROTATION CODE
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         if UIDevice.currentDevice().orientation.isLandscape.boolValue {
             println("landscape")
         } else {
             println("portraight")
         }
+        println("Screen width=\(UIScreen.mainScreen().bounds.size.width)")
+        println(size)
         refreshViewController()
     }
+
+    
+    
+    override func supportedInterfaceOrientations() -> Int {
+        return Int(UIInterfaceOrientationMask.All.rawValue)
+    }
     */
+    
     
     // MARK: Gestures
     func gestureRecognizer(UILongPressGestureRecognizer,
@@ -259,7 +283,6 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         let touchPosition = sender.locationInView(self.collectionView)
         if sender.state == UIGestureRecognizerState.Began {
             self.settingsLoadBar.setYPos(Int(touchPosition.y))
-            self.settingsLoadBar.maxWidth = Int(self.screenSize.width) - 40
             collectionView?.addSubview(self.settingsLoadBar)
             self.settingsLoadBar.animateBar()
         } else if sender.state == UIGestureRecognizerState.Ended {
@@ -285,7 +308,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         var scrollContentSizeHeight = scrollView.contentSize.height;
         var scrollOffset = scrollView.contentOffset.y;
         
-        println("viewheight=\(scrollViewHeight) contentHeight=\(scrollContentSizeHeight) Offset=\(scrollOffset)")
+        //println("viewheight=\(scrollViewHeight) contentHeight=\(scrollContentSizeHeight) Offset=\(scrollOffset)")
         
 
         if (scrollOffset + scrollViewHeight > (scrollContentSizeHeight-10))
