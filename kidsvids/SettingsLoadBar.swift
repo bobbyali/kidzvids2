@@ -33,7 +33,7 @@ class SettingsLoadBar: UIView {
     }
     
     func animateBar() {
-        UIView.animateWithDuration(2.5, animations: {
+        UIView.animateWithDuration(1.0, animations: {
             self.frame.size.width = CGFloat(self.maxWidth)
         })
     }

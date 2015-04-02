@@ -25,6 +25,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     var longPressFinal = UILongPressGestureRecognizer()
     var importer: NetworkImporter!
     var activityIndicatorView: UIActivityIndicatorView!
+    var loadedTwoSetsForiPad: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         navigationController?.setNavigationBarHidden(true, animated: false)
         
         infoLabel = UILabel(frame: CGRect(x: 10, y: 10, width: screenSize.width-40, height: 20))
-        infoLabel.text = "Tap and hold for settings (wait for green bar)"
+        infoLabel.text = "Tap and hold for settings"
         infoLabel.numberOfLines = 2
         infoLabel.textColor = UIColor.whiteColor()
         infoLabel.textAlignment = NSTextAlignment.Center
@@ -65,7 +66,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         self.view.addGestureRecognizer(longPressInit)
         
         longPressFinal = UILongPressGestureRecognizer(target: self, action: "showLongTouchLoadReady:")
-        longPressFinal.minimumPressDuration = 3
+        longPressFinal.minimumPressDuration = 1.5
         longPressFinal.numberOfTapsRequired = 0
         longPressFinal.numberOfTouchesRequired = 1
         longPressFinal.delegate = self
@@ -200,6 +201,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             
             importer.fetchNextSetOfVideoIDs()
         }
+        
                 
         self.collectionView?.reloadData()
         if let collectionView = self.collectionView {
@@ -267,6 +269,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
         {
             // scrolling hits bottom of screen
+            print("scrolled to bottom")
             activityIndicatorView.startAnimating()
             importer.fetchNextSetOfVideoIDs()
 
@@ -277,8 +280,21 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     func fetchCompleted(nextPageToken:String?, lastPage:Bool) {
         if let token = nextPageToken {
             importer.nextPageToken = token
+            println("Token: " + token)
         }
+        println("Delegated")
         importer.lastPage = lastPage
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            // do second fetch on iPad to take up the whole screen and
+            // enable scrolling
+            if self.loadedTwoSetsForiPad == false {
+                self.loadedTwoSetsForiPad = true
+                importer.fetchNextSetOfVideoIDs()
+                println("Dobule fetch!")
+            }
+        }
+        
         activityIndicatorView.removeFromSuperview()
         self.collectionView?.reloadData()
     }

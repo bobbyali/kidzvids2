@@ -21,7 +21,6 @@ class NetworkImporter {
     var nextPageToken:String?
     var firstPage:Bool = true
     var lastPage:Bool = false
-    var lastPageFetched: Bool = false
     
     var playlists: PlaylistCollection = PlaylistCollection.sharedInstance
     var delegate: NetworkImporterDelegate?
@@ -38,10 +37,8 @@ class NetworkImporter {
             queryYoutube(searchString)
         } else if firstPage == true {
             queryYoutube(searchString)
-        } else if lastPage == true && lastPageFetched == false {
-            lastPageFetched = true
-            queryYoutube(searchString)
-        } // else if lastPageFetched == true then do nothing
+            firstPage = false
+        } // else if lastPage == true then do nothing
         return self.lastPage
     }
     
@@ -59,8 +56,7 @@ class NetworkImporter {
                 if let dataArray = responseObject["items"] as? [AnyObject] {
                     for dataObject in dataArray {
                         if let imageURLString = dataObject.valueForKeyPath("contentDetails.videoId") as? String {
-                            //println(imageURLString)
-                            //self.playlist.videoIDs.append(imageURLString)
+                            println(imageURLString)
                             self.playlists.getCurrentPlaylist().videoIDs.append(imageURLString)
                         }
                     }
