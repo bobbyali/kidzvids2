@@ -29,6 +29,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     var activityIndicatorView: UIActivityIndicatorView!
     var loadedTwoSetsForiPad: Bool = false
     var fetchingResults: Bool = false
+    var isDataLoaded: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,15 +111,16 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
 
      func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
-        return 1
+        return self.isDataLoaded ? 1 : 0
     }
 
 
      func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
+        println("isDataLoaded = \(self.isDataLoaded)")
         if let currentPlaylist = playlists.getCurrentPlaylist() {
-            return currentPlaylist.videoIDs.count
+            return self.isDataLoaded ? currentPlaylist.videoIDs.count : 0
         } else {
             return 0
         }
@@ -187,6 +189,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
                 if !fetchingResults {
                     // prevent multiple fetches when app starts
                     fetchingResults = true
+                    isDataLoaded = false
                     importer = NetworkImporter()
                     importer.delegate = self
                     activityIndicatorView.startAnimating()
@@ -247,6 +250,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
                 if isLastPage {
                     activityIndicatorView.stopAnimating()
                 }
+                self.isDataLoaded = false
                 self.fetchingResults = true
             }
 
@@ -274,6 +278,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         
         activityIndicatorView.stopAnimating()
         self.fetchingResults = false
+        self.isDataLoaded = true
         self.collectionView?.reloadData()
         //self.collectionView?.contentOffset.y += 100
     }
