@@ -28,7 +28,7 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidAppear(animated: Bool) {
         self.tableView.reloadData()
-        var currentPlaylistID = NSIndexPath(forRow: playlists.currentPlaylist, inSection: 0)
+        var currentPlaylistID = NSIndexPath(forRow: playlists.currentPlaylist!, inSection: 0)
         //tableView.selectRowAtIndexPath(currentPlaylistID, animated: false, scrollPosition: UITableViewScrollPosition.None)
     }
 
@@ -70,6 +70,7 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.playlists.currentPlaylist = indexPath.row
+        self.playlists.saveCollection()
     }
     
     // MARK: Buttons
@@ -85,5 +86,11 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
         let targetVC = PlaylistDetailsViewController()
         self.navigationController?.pushViewController(targetVC, animated: true)
     }
-    
+
+    func deleteButton(playlistIndex:Int) {
+        playlists.list.removeAtIndex(playlistIndex)
+        playlists.currentPlaylist = 0
+        playlists.saveCollection()
+        self.tableView.reloadData()
+    }
 }

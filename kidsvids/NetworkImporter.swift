@@ -30,14 +30,16 @@ class NetworkImporter {
     
     // starts asynchronous fetch of videoIDs
     func fetchNextSetOfVideoIDs() -> Bool {
-        self.searchString = youtubePlaylistURLPrefix + self.playlists.getCurrentPlaylist().playlistID + youtubeKeySuffix
-        if let nextPageToken = self.nextPageToken {
-            searchString = searchString + "&pageToken=" + nextPageToken
-            queryYoutube(searchString)
-        } else if firstPage == true {
-            firstPage = false
-            queryYoutube(searchString)
-        } // else if lastPage == true then do nothing
+        if let currentPlaylist = self.playlists.getCurrentPlaylist() {
+            self.searchString = youtubePlaylistURLPrefix + currentPlaylist.playlistID + youtubeKeySuffix
+            if let nextPageToken = self.nextPageToken {
+                searchString = searchString + "&pageToken=" + nextPageToken
+                queryYoutube(searchString)
+            } else if firstPage == true {
+                firstPage = false
+                queryYoutube(searchString)
+            } // else if lastPage == true then do nothing
+        }
         return self.lastPage
     }
     
@@ -55,8 +57,10 @@ class NetworkImporter {
                 if let dataArray = responseObject["items"] as? [AnyObject] {
                     for dataObject in dataArray {
                         if let imageURLString = dataObject.valueForKeyPath("contentDetails.videoId") as? String {
-                            //println(imageURLString)
-                            self.playlists.getCurrentPlaylist().videoIDs.append(imageURLString)
+                            if let currentPlaylist = self.playlists.getCurrentPlaylist() {
+                                currentPlaylist.videoIDs.append(imageURLString)
+                            }
+                            
                         }
                     }
                 }

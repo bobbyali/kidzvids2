@@ -39,7 +39,9 @@ class PlaylistDetailsViewController: UIViewController {
         playlistTitleField = UITextField(frame: CGRectMake(20, 20, 300, 200))
         playlistTitleField.placeholder = "Trucks"
         if !self.isNewPlaylist {
-            playlistTitleField.text = playlists.getCurrentPlaylist().title
+            if let currentPlaylist = playlists.getCurrentPlaylist() {
+                playlistTitleField.text = currentPlaylist.title
+            }
         }
         playlistTitleField.backgroundColor = UIColor.blackColor()
         playlistTitleField.textColor = UIColor.whiteColor()
@@ -66,7 +68,9 @@ class PlaylistDetailsViewController: UIViewController {
         playlistIDField = UITextField(frame: CGRectMake(20, 20, 300, 200))
         playlistIDField.placeholder = "PL35F93FA3C740F3BB"
         if !self.isNewPlaylist {
-            playlistIDField.text = playlists.getCurrentPlaylist().playlistID
+            if let currentPlaylist = playlists.getCurrentPlaylist() {
+                playlistIDField.text = currentPlaylist.playlistID
+            }
         }
         playlistIDField.textColor = UIColor.whiteColor()
         playlistIDField.layer.borderWidth = 1
@@ -94,9 +98,12 @@ class PlaylistDetailsViewController: UIViewController {
             self.playlists.list.append(newPlaylist)
             self.playlists.currentPlaylist = self.playlists.list.count-1
         } else {
-            self.playlists.getCurrentPlaylist().title = self.playlistTitleField.text
-            self.playlists.getCurrentPlaylist().playlistID = self.playlistIDField.text
+            if let currentPlaylist = self.playlists.getCurrentPlaylist() {
+                currentPlaylist.title = self.playlistTitleField.text
+                currentPlaylist.playlistID = self.playlistIDField.text
+            }
         }
+        self.playlists.saveCollection()
         self.navigationController?.popViewControllerAnimated(true)
     }
 

@@ -117,7 +117,12 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
      func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return playlists.getCurrentPlaylist().videoIDs.count
+        if let currentPlaylist = playlists.getCurrentPlaylist() {
+            return currentPlaylist.videoIDs.count
+        } else {
+            return 0
+        }
+            
     }
 
      func collectionView(collectionView: UICollectionView,
@@ -125,11 +130,14 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
         // Configure the cell
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as VideoPhotoCell
-        let videoPhotoURL = "http://img.youtube.com/vi/" + playlists.getCurrentPlaylist().videoIDs[indexPath.row] + "/0.jpg"
-        cell.backgroundColor = UIColor.blackColor()
-        cell.videoPhotoCell.setImageWithURL(NSURL(string: videoPhotoURL ))
-        cell.videoPhotoCell.frame = cell.contentView.bounds;
-        cell.videoPhotoCell.autoresizingMask = UIViewAutoresizing.FlexibleWidth|UIViewAutoresizing.FlexibleHeight;
+            
+        if let currentPlaylist = playlists.getCurrentPlaylist() {
+            let videoPhotoURL = "http://img.youtube.com/vi/" + currentPlaylist.videoIDs[indexPath.row] + "/0.jpg"
+            cell.backgroundColor = UIColor.blackColor()
+            cell.videoPhotoCell.setImageWithURL(NSURL(string: videoPhotoURL ))
+            cell.videoPhotoCell.frame = cell.contentView.bounds;
+            cell.videoPhotoCell.autoresizingMask = UIViewAutoresizing.FlexibleWidth|UIViewAutoresizing.FlexibleHeight;
+        }
             
         return cell
     }
@@ -163,7 +171,9 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
             let vc = PlayerViewController()
-            vc.videoID = self.playlists.getCurrentPlaylist().videoIDs[indexPath.row]
+            if let currentPlaylist = self.playlists.getCurrentPlaylist() {
+                vc.videoID = currentPlaylist.videoIDs[indexPath.row]
+            }
             self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -171,19 +181,20 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     // MARK: Events
     func refreshViewController() {
         
-        var currentPlaylist = self.playlists.getCurrentPlaylist()
-        if currentPlaylist.videoIDs.count == 0 {
-            // fetch videos when presented with an empty playlist
-            if !fetchingResults {
-                // prevent multiple fetches when app starts
-                fetchingResults = true
-                importer = NetworkImporter()
-                importer.delegate = self
-                activityIndicatorView.startAnimating()
-                importer.fetchNextSetOfVideoIDs()
+        if let currentPlaylist = self.playlists.getCurrentPlaylist() {
+            if currentPlaylist.videoIDs.count == 0 {
+                // fetch videos when presented with an empty playlist
+                if !fetchingResults {
+                    // prevent multiple fetches when app starts
+                    fetchingResults = true
+                    importer = NetworkImporter()
+                    importer.delegate = self
+                    activityIndicatorView.startAnimating()
+                    importer.fetchNextSetOfVideoIDs()
+                }
+            } else {
+                self.collectionView?.reloadData()
             }
-        } else {
-            self.collectionView?.reloadData()
         }
         
         if let collectionView = self.collectionView {
