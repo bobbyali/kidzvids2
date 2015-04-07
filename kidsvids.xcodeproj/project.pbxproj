@@ -22,6 +22,8 @@
 		C5A682F91ACB007D00F8E347 /* PlaylistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682F81ACB007D00F8E347 /* PlaylistTableViewController.swift */; };
 		C5A682FB1ACC1EF300F8E347 /* PlaylistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682FA1ACC1EF300F8E347 /* PlaylistTableViewCell.swift */; };
 		C5A682FD1ACC2B9D00F8E347 /* PlaylistDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682FC1ACC2B9D00F8E347 /* PlaylistDetailsViewController.swift */; };
+		C5C2AAD71ACEAEA6001B55AA /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C2AAD51ACEAEA6001B55AA /* Crashlytics.framework */; };
+		C5C2AAD81ACEAEA6001B55AA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C2AAD61ACEAEA6001B55AA /* Fabric.framework */; };
 		F06E498AC9C89EBBBF1A2320 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307F433F85436DCFCCA90279 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,8 @@
 		C5A682F81ACB007D00F8E347 /* PlaylistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewController.swift; sourceTree = "<group>"; };
 		C5A682FA1ACC1EF300F8E347 /* PlaylistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewCell.swift; sourceTree = "<group>"; };
 		C5A682FC1ACC2B9D00F8E347 /* PlaylistDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsViewController.swift; sourceTree = "<group>"; };
+		C5C2AAD51ACEAEA6001B55AA /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		C5C2AAD61ACEAEA6001B55AA /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +70,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5C2AAD71ACEAEA6001B55AA /* Crashlytics.framework in Frameworks */,
 				F06E498AC9C89EBBBF1A2320 /* Pods.framework in Frameworks */,
+				C5C2AAD81ACEAEA6001B55AA /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +97,8 @@
 		C53245BC1AC95DE000390D2B = {
 			isa = PBXGroup;
 			children = (
+				C5C2AAD51ACEAEA6001B55AA /* Crashlytics.framework */,
+				C5C2AAD61ACEAEA6001B55AA /* Fabric.framework */,
 				C5A682F31AC9B27600F8E347 /* bridge.h */,
 				C53245C71AC95DE000390D2B /* kidsvids */,
 				C53245DD1AC95DE000390D2B /* kidsvidsTests */,
@@ -210,6 +218,7 @@
 				C53245C31AC95DE000390D2B /* Resources */,
 				C02DFEC5049F1A61908C3673 /* Embed Pods Frameworks */,
 				A0ED987B50D410E40D33DF6E /* Copy Pods Resources */,
+				C5C2AAD41ACEAE60001B55AA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -340,6 +349,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C5C2AAD41ACEAE60001B55AA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 41e1346bacb350cf92c3ccdd8cf43d7c7546d426 318768fa711832ee2594278f5b93652f104bc6d2db7d8122e0182543c513149a";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -479,6 +501,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = kidsvids/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -494,6 +520,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = kidsvids/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

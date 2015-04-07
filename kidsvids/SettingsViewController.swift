@@ -25,6 +25,7 @@ class SettingsViewController: UIViewController {
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         
+        self.view.backgroundColor = UIColor.blackColor()
         labelPlaylists = UILabel(frame: CGRectMake(0, 0, 300, 200))
         labelPlaylists.text = "\(self.playlists.list.count) Playlists out of \(self.numTotalPlaylists) currently used."
         labelPlaylists.textColor = UIColor.whiteColor()

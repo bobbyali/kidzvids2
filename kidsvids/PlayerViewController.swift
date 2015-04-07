@@ -16,6 +16,8 @@ class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor.blackColor()
         player = XCDYouTubeVideoPlayerViewController(videoIdentifier: videoID)
         
         NSNotificationCenter.defaultCenter().addObserver(

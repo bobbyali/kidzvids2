@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //self.window?.rootViewController = rootViewController
         self.window?.backgroundColor = UIColor.blackColor()
         self.window?.makeKeyAndVisible()
+        
+        Fabric.with([Crashlytics()])
         
         return true
     }

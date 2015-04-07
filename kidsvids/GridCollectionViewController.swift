@@ -6,6 +6,7 @@
 // through a controller view container. User can select a video
 // cell to initiate video playback, or do a long press to call the
 // settings screen.
+// (extra comment line)
 
 import UIKit
 
@@ -83,6 +84,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
 
     override func viewWillAppear(animated: Bool) {
         // refresh view with latest videos after returning from settings view controller
+        self.collectionView?.contentOffset = CGPointZero
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         refreshViewController()
     }
@@ -261,6 +263,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         activityIndicatorView.stopAnimating()
         self.fetchingResults = false
         self.collectionView?.reloadData()
+        //self.collectionView?.contentOffset.y += 100
     }
     
 }
