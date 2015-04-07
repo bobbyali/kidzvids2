@@ -261,6 +261,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             importer.nextPageToken = nil
         }
         importer.lastPage = lastPage
+        importer.firstPage = false
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             // do second fetch on iPad to take up the whole screen and
@@ -275,6 +276,15 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         self.fetchingResults = false
         self.collectionView?.reloadData()
         //self.collectionView?.contentOffset.y += 100
+    }
+    
+    func fetchFailed() {
+        // need to do a new notification for failure
+        var alert = UIAlertController(title: "Alert", message: "Cannot reach YouTube. Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+        activityIndicatorView.stopAnimating()
+        self.fetchingResults = false
     }
     
 }

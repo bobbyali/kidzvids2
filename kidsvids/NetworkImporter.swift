@@ -9,6 +9,7 @@ import AFNetworking
 
 protocol NetworkImporterDelegate {
     func fetchCompleted(nextPageToken:String?, lastPage:Bool)
+    func fetchFailed() 
 }
 
 class NetworkImporter {
@@ -36,7 +37,7 @@ class NetworkImporter {
                 searchString = searchString + "&pageToken=" + nextPageToken
                 queryYoutube(searchString)
             } else if firstPage == true {
-                firstPage = false
+                //firstPage = false
                 queryYoutube(searchString)
             } // else if lastPage == true then do nothing
         }
@@ -74,8 +75,7 @@ class NetworkImporter {
             },
             failure: { (operation: AFHTTPRequestOperation!,error: NSError!) in
                 println("Error: " + error.localizedDescription)
-                
-                // need to do a new notification for failure
+                self.delegate?.fetchFailed()
         })
         
     }
