@@ -25,21 +25,29 @@ class NetworkImporter {
     var playlists: PlaylistCollection = PlaylistCollection.sharedInstance
     var delegate: NetworkImporterDelegate?
     
+    var isBusy:Bool = false
+    
     // MARK: Public Methods
     init() {
     }
     
     // starts asynchronous fetch of videoIDs
     func fetchNextSetOfVideoIDs() -> Bool {
-        if let currentPlaylist = self.playlists.getCurrentPlaylist() {
-            self.searchString = youtubePlaylistURLPrefix + currentPlaylist.playlistID + youtubeKeySuffix
-            if let nextPageToken = self.nextPageToken {
-                searchString = searchString + "&pageToken=" + nextPageToken
-                queryYoutube(searchString)
-            } else if firstPage == true {
-                //firstPage = false
-                queryYoutube(searchString)
-            } // else if lastPage == true then do nothing
+        println("isBusy? \(self.isBusy)")
+        if !self.isBusy {
+            println("* a")
+            if let currentPlaylist = self.playlists.getCurrentPlaylist() {
+                println("* d")
+                self.searchString = youtubePlaylistURLPrefix + currentPlaylist.playlistID + youtubeKeySuffix
+                if let nextPageToken = self.nextPageToken {
+                    println("* b")
+                    self.searchString = self.searchString + "&pageToken=" + nextPageToken
+                    queryYoutube(self.searchString)
+                } else if self.firstPage == true {
+                    println("* c")
+                    queryYoutube(self.searchString)
+                } else { println("* e") } // else if lastPage == true then do nothing
+            }
         }
         return self.lastPage
     }
@@ -50,6 +58,8 @@ class NetworkImporter {
     private func queryYoutube(searchString:String) {
 
         let manager = AFHTTPRequestOperationManager()
+        self.isBusy = true
+        println("Data fetch")
         
         manager.GET( searchString ,
             parameters: nil,

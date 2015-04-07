@@ -25,11 +25,11 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     var longPressInit = UILongPressGestureRecognizer()
     var longPressFinal = UILongPressGestureRecognizer()
-    var importer: NetworkImporter!
+    var importer: NetworkImporter! = NetworkImporter()
     var activityIndicatorView: UIActivityIndicatorView!
     var loadedTwoSetsForiPad: Bool = false
-    var fetchingResults: Bool = false
-    var isDataLoaded: Bool = false
+    var isDataReady: Bool = false
+    var updateCells: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,9 +87,8 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         // refresh view with latest videos after returning from settings view controller
         self.collectionView?.contentOffset = CGPointZero
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.fetchingResults = false
-        self.isDataLoaded = true
-        
+        println("1 viewWillAppear")
+        self.isDataReady = false
         refreshViewController()
     }
     
@@ -98,11 +97,10 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView?.frame = self.view.frame
-        
         self.infoLabel.frame.size.width = self.view.frame.width - 40
         self.settingsLoadBar.maxWidth = Int(self.view.frame.width - 40)
-        self.isDataLoaded = true
-        
+        println("2 viewDidLayoutSubviews")
+        self.isDataReady = true
         refreshViewController()
     }
     
@@ -115,7 +113,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
 
      func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
-        return self.isDataLoaded ? 1 : 0
+        return !self.importer.isBusy ? 1 : 0
     }
 
 
@@ -123,7 +121,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         if let currentPlaylist = playlists.getCurrentPlaylist() {
-            return self.isDataLoaded ? currentPlaylist.videoIDs.count : 0
+            return !self.importer.isBusy ? currentPlaylist.videoIDs.count : 0
         } else {
             return 0
         }
@@ -137,7 +135,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as VideoPhotoCell
             
         if let currentPlaylist = playlists.getCurrentPlaylist() {
-            if self.isDataLoaded {
+            if self.isDataReady {
                 let videoPhotoURL = "http://img.youtube.com/vi/" + currentPlaylist.videoIDs[indexPath.row] + "/0.jpg"
                 cell.backgroundColor = UIColor.blackColor()
                 cell.videoPhotoCell.setImageWithURL(NSURL(string: videoPhotoURL ))
@@ -191,14 +189,16 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         if let currentPlaylist = self.playlists.getCurrentPlaylist() {
             if currentPlaylist.videoIDs.count == 0 {
                 // fetch videos when presented with an empty playlist
-                if !fetchingResults {
-                    // prevent multiple fetches when app starts
-                    fetchingResults = true
-                    isDataLoaded = false
-                    importer = NetworkImporter()
-                    importer.delegate = self
-                    activityIndicatorView.startAnimating()
-                    importer.fetchNextSetOfVideoIDs()
+                if !self.importer.isBusy {
+                    self.importer.delegate = self
+                    self.isDataReady = false
+                    self.activityIndicatorView.startAnimating()
+                    if let currentPlaylist = self.playlists.getCurrentPlaylist() {
+                        if currentPlaylist.getNumberOfVideos() == 0 {
+                            self.importer.firstPage = true
+                        }
+                    }
+                    self.importer.fetchNextSetOfVideoIDs()
                 }
             } else {
                 self.collectionView?.reloadData()
@@ -220,7 +220,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         let touchPosition = sender.locationInView(self.collectionView)
         if sender.state == UIGestureRecognizerState.Began {
             self.settingsLoadBar.setYPos(Int(touchPosition.y))
-            collectionView?.addSubview(self.settingsLoadBar)
+            self.collectionView?.addSubview(self.settingsLoadBar)
             self.settingsLoadBar.animateBar()
         } else if sender.state == UIGestureRecognizerState.Ended {
             self.settingsLoadBar.setWidth(0)
@@ -247,45 +247,40 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         if (scrollOffset + scrollViewHeight > (scrollContentSizeHeight-10))
         {
             // scrolling hits bottom of screen
-            if !fetchingResults {
-                // make sure results are only fetched once, if the
-                // scroll-to-bottom action is triggered multiple times
-                activityIndicatorView.startAnimating()
-                var isLastPage = importer.fetchNextSetOfVideoIDs()
+            if !self.importer.isBusy {
+                self.activityIndicatorView.startAnimating()
+                var isLastPage = self.importer.fetchNextSetOfVideoIDs()
                 if isLastPage {
-                    activityIndicatorView.stopAnimating()
+                    self.activityIndicatorView.stopAnimating()
                 }
-                self.isDataLoaded = false
-                self.fetchingResults = true
             }
-
-        }
+        }        
     }
     
     // MARK: Delegate methods
     func fetchCompleted(nextPageToken:String?, lastPage:Bool) {
         if let token = nextPageToken {
-            importer.nextPageToken = token
+            self.importer.nextPageToken = token
         } else {
-            importer.nextPageToken = nil
+            self.importer.nextPageToken = nil
         }
-        importer.lastPage = lastPage
-        importer.firstPage = false
+        self.importer.lastPage = lastPage
+        self.importer.firstPage = false
+        self.activityIndicatorView.stopAnimating()
+        self.importer.isBusy = false
+        self.isDataReady = true
+        println("a fetchCompleted")
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             // do second fetch on iPad to take up the whole screen and
             // enable scrolling
             if self.loadedTwoSetsForiPad == false {
                 self.loadedTwoSetsForiPad = true
-                importer.fetchNextSetOfVideoIDs()
+                self.importer.fetchNextSetOfVideoIDs()
             }
         }
         
-        activityIndicatorView.stopAnimating()
-        self.fetchingResults = false
-        self.isDataLoaded = true
         self.collectionView?.reloadData()
-        //self.collectionView?.contentOffset.y += 100
     }
     
     func fetchFailed() {
@@ -293,8 +288,10 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         var alert = UIAlertController(title: "Alert", message: "Cannot reach YouTube. Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
-        activityIndicatorView.stopAnimating()
-        self.fetchingResults = false
+        self.activityIndicatorView.stopAnimating()
+        self.importer.isBusy = false
+        self.isDataReady = true
+        println("b fetchFailed")
     }
     
 }
