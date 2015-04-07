@@ -83,7 +83,7 @@ class PlaylistCollection {
             list.append(Playlist(title: "Trucks", playlistID: "PL35F93FA3C740F3BB"))
             list.append(Playlist(title: "Alphabet", playlistID: "PL97977A770B5B12E2"))
             list.append(Playlist(title: "Baby Einstein", playlistID: "PLRg7DhTholQCMjMfXLOQ2bVSTwpZz24OA"))
-            list.append(Playlist(title: "Monster Trucks", playlistID: "PLzOVN-J2M012Pkiz0sOx17B6rRDeYj3Rp"))
+            list.append(Playlist(title: "Nursery Rhymes", playlistID: "PLkyj8eZFNWJSnaqiCLIkm2k-ij3XIP-az"))
             self.currentPlaylist = 0
             saveCollection()
         }

@@ -27,7 +27,8 @@ class SettingsViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.blackColor()
         labelPlaylists = UILabel(frame: CGRectMake(0, 0, 300, 200))
-        labelPlaylists.text = "\(self.playlists.list.count) Playlists out of \(self.numTotalPlaylists) currently used."
+        //labelPlaylists.text = "\(self.playlists.list.count) Playlists out of \(self.numTotalPlaylists) currently used."
+        labelPlaylists.text = "You have \(self.playlists.list.count) Playlists set up."
         labelPlaylists.textColor = UIColor.whiteColor()
         labelPlaylists.font = UIFont(name: "Avenir", size: CGFloat(17))
         self.view.addSubview(labelPlaylists)
@@ -87,8 +88,7 @@ class SettingsViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.labelPlaylists.text = "\(self.playlists.list.count) Playlists out of \(self.numTotalPlaylists) currently used."
-        
+        labelPlaylists.text = "You have \(self.playlists.list.count) Playlists set up."        
     }
     
     // MARK: Buttons and Sliders

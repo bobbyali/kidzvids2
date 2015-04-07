@@ -55,7 +55,7 @@ class PlaylistDetailsViewController: UIViewController {
         }
 
         var playlistIDLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 300, height: 200))
-        playlistIDLabel.text = "Playlist ID"
+        playlistIDLabel.text = "Playlist ID (can paste a URL)"
         playlistIDLabel.textColor = UIColor.whiteColor()
         playlistIDLabel.textAlignment = NSTextAlignment.Left
         playlistIDLabel.font = UIFont(name: "HelveticaNeue", size: CGFloat(17))
@@ -94,17 +94,39 @@ class PlaylistDetailsViewController: UIViewController {
     // MARK: Buttons
     func savePlaylist(sender:UIButton!) {
         if isNewPlaylist {
-            var newPlaylist = Playlist(title: self.playlistTitleField.text, playlistID: self.playlistIDField.text)
+            var newPlaylist = Playlist(title: self.playlistTitleField.text, playlistID: processStringForPlaylistID(self.playlistIDField.text))
             self.playlists.list.append(newPlaylist)
             self.playlists.currentPlaylist = self.playlists.list.count-1
         } else {
             if let currentPlaylist = self.playlists.getCurrentPlaylist() {
                 currentPlaylist.title = self.playlistTitleField.text
-                currentPlaylist.playlistID = self.playlistIDField.text
+                currentPlaylist.playlistID = processStringForPlaylistID(self.playlistIDField.text)
             }
         }
         self.playlists.saveCollection()
         self.navigationController?.popViewControllerAnimated(true)
     }
 
+    func processStringForPlaylistID(url:String) -> String {
+        
+        if url.rangeOfString("list") != nil {
+            var queryStrings = [String: String]()
+            var urlPieces = url.componentsSeparatedByString("?")
+            for qs in urlPieces[1].componentsSeparatedByString("&") {
+                // Get the parameter name
+                let key = qs.componentsSeparatedByString("=")[0]
+                // Get the parameter name
+                var value = qs.componentsSeparatedByString("=")[1]
+                value = value.stringByReplacingOccurrencesOfString("+", withString: " ")
+                value = value.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+                
+                queryStrings[key] = value
+            }
+            //println("playlistID = " + queryStrings["list"]!)
+            return queryStrings["list"]!
+        } else {
+            return url
+        }
+    }
+    
 }
