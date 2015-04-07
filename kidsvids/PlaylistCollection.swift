@@ -33,7 +33,7 @@ class PlaylistCollection {
     
     func getCurrentPlaylist() -> Playlist? {
         if let currentPlaylist = self.currentPlaylist {
-            return list[currentPlaylist]
+            return self.list[currentPlaylist]
         } else {
             return nil
         }

@@ -87,6 +87,9 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         // refresh view with latest videos after returning from settings view controller
         self.collectionView?.contentOffset = CGPointZero
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.fetchingResults = false
+        self.isDataLoaded = true
+        
         refreshViewController()
     }
     
@@ -98,7 +101,8 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         
         self.infoLabel.frame.size.width = self.view.frame.width - 40
         self.settingsLoadBar.maxWidth = Int(self.view.frame.width - 40)
-
+        self.isDataLoaded = true
+        
         refreshViewController()
     }
     
@@ -118,7 +122,6 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
      func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        println("isDataLoaded = \(self.isDataLoaded)")
         if let currentPlaylist = playlists.getCurrentPlaylist() {
             return self.isDataLoaded ? currentPlaylist.videoIDs.count : 0
         } else {
@@ -134,11 +137,13 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as VideoPhotoCell
             
         if let currentPlaylist = playlists.getCurrentPlaylist() {
-            let videoPhotoURL = "http://img.youtube.com/vi/" + currentPlaylist.videoIDs[indexPath.row] + "/0.jpg"
-            cell.backgroundColor = UIColor.blackColor()
-            cell.videoPhotoCell.setImageWithURL(NSURL(string: videoPhotoURL ))
-            cell.videoPhotoCell.frame = cell.contentView.bounds;
-            cell.videoPhotoCell.autoresizingMask = UIViewAutoresizing.FlexibleWidth|UIViewAutoresizing.FlexibleHeight;
+            if self.isDataLoaded {
+                let videoPhotoURL = "http://img.youtube.com/vi/" + currentPlaylist.videoIDs[indexPath.row] + "/0.jpg"
+                cell.backgroundColor = UIColor.blackColor()
+                cell.videoPhotoCell.setImageWithURL(NSURL(string: videoPhotoURL ))
+                cell.videoPhotoCell.frame = cell.contentView.bounds;
+                cell.videoPhotoCell.autoresizingMask = UIViewAutoresizing.FlexibleWidth|UIViewAutoresizing.FlexibleHeight;
+            }
         }
             
         return cell
