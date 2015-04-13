@@ -38,7 +38,7 @@ class SettingsViewController: UIViewController {
             make.left.equalTo(superview.snp_left).with.offset(topPadding.left)
         }
         
-        let editPlaylistButton   = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let editPlaylistButton   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         editPlaylistButton.frame = CGRectMake(0, 0, 300, 200)
         editPlaylistButton.backgroundColor = UIColor.blackColor()
         editPlaylistButton.setTitle("Change or Edit Playlists", forState: UIControlState.Normal)

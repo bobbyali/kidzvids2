@@ -55,16 +55,16 @@ class PlaylistCollection {
     }
     
     func loadCollection() {
-        var readArrayOfTitles: [NSString]? = defaults.objectForKey(keyForListOfPlaylistTitles) as [NSString]?
-        var readArrayOfIDs: [NSString]? = defaults.objectForKey(keyForListOfPlaylistIDs) as [NSString]?
-        var savedCurrentPlaylist: Int? = defaults.valueForKey(keyForCurrentPlaylist) as Int?
+        var readArrayOfTitles: [NSString]? = defaults.objectForKey(keyForListOfPlaylistTitles) as! [NSString]?
+        var readArrayOfIDs: [NSString]? = defaults.objectForKey(keyForListOfPlaylistIDs) as! [NSString]?
+        var savedCurrentPlaylist: Int? = defaults.valueForKey(keyForCurrentPlaylist) as! Int?
         var blnEmptyUserDefaults = false
         
         if let arrayOfTitles = readArrayOfTitles {
             if let arrayOfIDs = readArrayOfIDs  {
                 if arrayOfTitles.count > 0 && arrayOfIDs.count > 0 {
                     for (index, element) in enumerate(arrayOfTitles) {
-                        list.append(Playlist(title: arrayOfTitles[index], playlistID: arrayOfIDs[index]))
+                        list.append(Playlist(title: arrayOfTitles[index] as String, playlistID: arrayOfIDs[index] as String))
                     }
                 }
                 self.currentPlaylist = savedCurrentPlaylist!

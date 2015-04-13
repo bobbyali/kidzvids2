@@ -37,7 +37,7 @@ class PlaylistTableViewCell: UITableViewCell {
         }
 
         
-        let buttonDelete   = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let buttonDelete   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         buttonDelete.frame = CGRectMake(100, 10, 100, 10)
         buttonDelete.setTitle("Delete", forState: UIControlState.Normal)
         buttonDelete.addTarget(self, action: "buttonDelete:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -50,7 +50,7 @@ class PlaylistTableViewCell: UITableViewCell {
 
         
         
-        let buttonEdit   = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let buttonEdit   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         buttonEdit.frame = CGRectMake(100, 10, 100, 10)
         buttonEdit.setTitle("Edit", forState: UIControlState.Normal)
         buttonEdit.addTarget(self, action: "buttonEdit:", forControlEvents: UIControlEvents.TouchUpInside)

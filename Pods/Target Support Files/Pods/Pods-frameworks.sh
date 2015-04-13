@@ -50,12 +50,10 @@ code_sign() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'AFNetworking.framework'
   install_framework 'Snap.framework'
-  install_framework 'SwiftyJSON.framework'
   install_framework 'XCDYouTubeKit.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'AFNetworking.framework'
   install_framework 'Snap.framework'
-  install_framework 'SwiftyJSON.framework'
   install_framework 'XCDYouTubeKit.framework'
 fi

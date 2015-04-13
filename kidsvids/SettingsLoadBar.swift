@@ -21,7 +21,7 @@ class SettingsLoadBar: UIView {
         self.backgroundColor = UIColor.redColor()
     }
     
-    func setWidth(width:Int) {
+    func setBarWidth(width:Int) {
         self.width = width
         setFrame()
     }

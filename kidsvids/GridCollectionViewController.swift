@@ -132,7 +132,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     
         // Configure the cell
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as VideoPhotoCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! VideoPhotoCell
             
         if let currentPlaylist = playlists.getCurrentPlaylist() {
             if self.isDataReady {
@@ -148,9 +148,9 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     }
     
     // MARK: Collection view flow delegate
-    func collectionView(collectionView: UICollectionView!,
-        layout collectionViewLayout: UICollectionViewLayout!,
-        sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
             
             let isLandscape = UIApplication.sharedApplication().statusBarOrientation.isLandscape
             var iconWidth: CGFloat
@@ -166,8 +166,8 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     private let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
     
-    func collectionView(collectionView: UICollectionView!,
-        layout collectionViewLayout: UICollectionViewLayout!,
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAtIndex section: Int) -> UIEdgeInsets {
             return sectionInsets
     }
@@ -211,9 +211,8 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     }
     
     // MARK: Actions
-    func gestureRecognizer(UILongPressGestureRecognizer,
-        shouldRecognizeSimultaneouslyWithGestureRecognizer:UILongPressGestureRecognizer) -> Bool {
-            return true
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
     func showLongTouchLoadInProgress(sender: UILongPressGestureRecognizer) {
@@ -223,7 +222,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             self.collectionView?.addSubview(self.settingsLoadBar)
             self.settingsLoadBar.animateBar()
         } else if sender.state == UIGestureRecognizerState.Ended {
-            self.settingsLoadBar.setWidth(0)
+            self.settingsLoadBar.setBarWidth(0)
             self.settingsLoadBar.removeFromSuperview()
         }
     }
