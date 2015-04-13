@@ -21,14 +21,18 @@ class PlaylistTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        self.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.0)
+        
         titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 100))
         titleLabel.text = ""
-        titleLabel.textColor = UIColor.blackColor()
+        titleLabel.textColor = UIColor.whiteColor()
         titleLabel.textAlignment = NSTextAlignment.Left
         titleLabel.font = UIFont(name: "HelveticaNeue", size: CGFloat(17))
         contentView.addSubview(titleLabel)
         
-        let padding = UIEdgeInsetsMake(10, 10, 10, -20)
+        let padding = UIEdgeInsetsMake(5, 10, -5, -20)
+        
         let superview = contentView
         
         titleLabel.snp_makeConstraints { make in
@@ -40,12 +44,18 @@ class PlaylistTableViewCell: UITableViewCell {
         let buttonDelete   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         buttonDelete.frame = CGRectMake(100, 10, 100, 10)
         buttonDelete.setTitle("Delete", forState: UIControlState.Normal)
+        buttonDelete.backgroundColor = UIColor.blackColor()
+        buttonDelete.layer.cornerRadius = 5
+        buttonDelete.layer.borderWidth = 1
+        buttonDelete.layer.borderColor = UIColor.whiteColor().CGColor
         buttonDelete.addTarget(self, action: "buttonDelete:", forControlEvents: UIControlEvents.TouchUpInside)
         contentView.addSubview(buttonDelete)
         
         buttonDelete.snp_makeConstraints { make in
             make.top.equalTo(superview.snp_top).with.offset(padding.top)
+            make.bottom.equalTo(superview.snp_bottom).with.offset(padding.bottom)
             make.right.equalTo(superview.snp_right).with.offset(padding.right)
+            make.width.equalTo(60)
         }
 
         
@@ -53,12 +63,18 @@ class PlaylistTableViewCell: UITableViewCell {
         let buttonEdit   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         buttonEdit.frame = CGRectMake(100, 10, 100, 10)
         buttonEdit.setTitle("Edit", forState: UIControlState.Normal)
+        buttonEdit.backgroundColor = UIColor.blackColor()
+        buttonEdit.layer.cornerRadius = 5
+        buttonEdit.layer.borderWidth = 1
+        buttonEdit.layer.borderColor = UIColor.whiteColor().CGColor
         buttonEdit.addTarget(self, action: "buttonEdit:", forControlEvents: UIControlEvents.TouchUpInside)
         contentView.addSubview(buttonEdit)
         
         buttonEdit.snp_makeConstraints { make in
             make.top.equalTo(superview.snp_top).with.offset(padding.top)
+            make.bottom.equalTo(superview.snp_bottom).with.offset(padding.bottom)
             make.right.equalTo(buttonDelete.snp_left).with.offset(padding.right)
+            make.width.equalTo(60)
         }
         
     }

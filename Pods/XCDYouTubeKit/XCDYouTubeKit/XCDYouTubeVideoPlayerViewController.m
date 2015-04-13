@@ -181,6 +181,7 @@ NSString *const XCDYouTubeVideoUserInfoKey = @"Video";
 	if (![self isBeingPresented])
 		return;
 	
+    [self becomeFirstResponder];
 	self.moviePlayer.controlStyle = MPMovieControlStyleFullscreen;
 	[self.moviePlayer play];
 }
@@ -188,11 +189,39 @@ NSString *const XCDYouTubeVideoUserInfoKey = @"Video";
 - (void) viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
-	
+    [self resignFirstResponder];
+
 	if (![self isBeingDismissed])
 		return;
 	
 	[self.videoOperation cancel];
+}
+
+
+
+
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+-(void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    if (motion == UIEventSubtypeMotionShake )
+    {
+        // shaking has began.
+        //NSLog(@"shaking started");
+    }
+}
+
+
+-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    if (motion == UIEventSubtypeMotionShake )
+    {
+        // shaking has ended
+        //NSLog(@"shaking stopped");
+        	[[NSNotificationCenter defaultCenter] postNotificationName:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
+    }
 }
 
 @end

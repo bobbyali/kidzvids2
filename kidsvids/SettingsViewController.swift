@@ -20,12 +20,17 @@ class SettingsViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         let topPadding = UIEdgeInsetsMake(80, 10, 10, 10)
-        let padding = UIEdgeInsetsMake(10, 10, 10, -50)
+        let padding = UIEdgeInsetsMake(10, 10, 10, -10)
         let superview = self.view
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!).colorWithAlphaComponent(0.5)
+        
         labelPlaylists = UILabel(frame: CGRectMake(0, 0, 300, 200))
         //labelPlaylists.text = "\(self.playlists.list.count) Playlists out of \(self.numTotalPlaylists) currently used."
         labelPlaylists.text = "You have \(self.playlists.list.count) Playlists set up."
@@ -42,6 +47,7 @@ class SettingsViewController: UIViewController {
         editPlaylistButton.frame = CGRectMake(0, 0, 300, 200)
         editPlaylistButton.backgroundColor = UIColor.blackColor()
         editPlaylistButton.setTitle("Change or Edit Playlists", forState: UIControlState.Normal)
+        //editPlaylistButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         editPlaylistButton.layer.cornerRadius = 5
         editPlaylistButton.layer.borderWidth = 1
         editPlaylistButton.layer.borderColor = UIColor.whiteColor().CGColor
@@ -67,7 +73,7 @@ class SettingsViewController: UIViewController {
         
         var slider = UISlider(frame: CGRectMake(0, 0, 300, 200))
         slider.addTarget(self, action: "changeImageScale:", forControlEvents: UIControlEvents.ValueChanged)
-        slider.backgroundColor = UIColor.blackColor()
+        slider.backgroundColor = nil
         slider.minimumValue = 0.2
         slider.maximumValue = 0.9
         slider.continuous = true
@@ -99,6 +105,10 @@ class SettingsViewController: UIViewController {
 
     func changeImageScale(sender:UISlider!) {
         self.playlists.iconScale = sender.value
+        self.playlists.saveCollection()
     }
+    
+    
+
 
 }

@@ -20,7 +20,8 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     var playlists: PlaylistCollection = PlaylistCollection.sharedInstance
     var screenSize: CGRect = UIScreen.mainScreen().bounds
-    var infoLabel: UILabel = UILabel()
+    var topInfoLabel: UILabel = UILabel()
+    var bottomInfoLabel: UILabel = UILabel()
     var settingsLoadBar: SettingsLoadBar = SettingsLoadBar(frame: CGRect(x: 20, y: 0, width: 0, height: 20))
     
     var longPressInit = UILongPressGestureRecognizer()
@@ -49,12 +50,27 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        infoLabel = UILabel(frame: CGRect(x: 10, y: 0, width: screenSize.width-40, height: 20))
-        infoLabel.text = "Tap and hold for settings"
-        infoLabel.numberOfLines = 2
-        infoLabel.textColor = UIColor.whiteColor()
-        infoLabel.textAlignment = NSTextAlignment.Center
-        collectionView?.addSubview(infoLabel)
+        topInfoLabel = UILabel(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 20))
+        topInfoLabel.text = "Tap and hold for settings"
+        topInfoLabel.font = UIFont(name: "HelveticaNeue", size: CGFloat(12))
+        topInfoLabel.numberOfLines = 1
+        topInfoLabel.textColor = UIColor.whiteColor()
+        topInfoLabel.textAlignment = NSTextAlignment.Center
+        topInfoLabel.backgroundColor = UIColor.blackColor()
+        topInfoLabel.autoresizingMask = UIViewAutoresizing.FlexibleWidth
+        //                 cell.videoPhotoCell.autoresizingMask = UIViewAutoresizing.FlexibleWidth|UIViewAutoresizing.FlexibleHeight;
+        self.view.addSubview(topInfoLabel)
+        
+        
+        bottomInfoLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height-20, width: screenSize.width, height: 20))
+        bottomInfoLabel.text = "Scroll to bottom to fetch more videos"
+        bottomInfoLabel.font = UIFont(name: "HelveticaNeue", size: CGFloat(12))
+        bottomInfoLabel.numberOfLines = 1
+        bottomInfoLabel.textColor = UIColor.whiteColor()
+        bottomInfoLabel.textAlignment = NSTextAlignment.Center
+        bottomInfoLabel.backgroundColor = UIColor.blackColor()
+        bottomInfoLabel.autoresizingMask = UIViewAutoresizing.FlexibleWidth|UIViewAutoresizing.FlexibleTopMargin
+        self.view.addSubview(bottomInfoLabel)
         
         longPressInit = UILongPressGestureRecognizer(target: self, action: "showLongTouchLoadInProgress:")
         longPressInit.minimumPressDuration = 0.5
@@ -97,7 +113,6 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView?.frame = self.view.frame
-        self.infoLabel.frame.size.width = self.view.frame.width - 40
         self.settingsLoadBar.maxWidth = Int(self.view.frame.width - 40)
         println("2 viewDidLayoutSubviews")
         self.isDataReady = true
@@ -164,7 +179,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             
     }
     
-    private let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
+    private let sectionInsets = UIEdgeInsets(top: 20.0, left: 50.0, bottom: 20.0, right: 50.0)
     
     func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

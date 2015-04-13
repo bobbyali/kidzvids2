@@ -18,16 +18,23 @@ class PlaylistDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!).colorWithAlphaComponent(0.5)
+        
         let newButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "savePlaylist:")
         self.navigationItem.rightBarButtonItem = newButton
         
         let topPadding = UIEdgeInsetsMake(80, 10, 10, 10)
-        let padding = UIEdgeInsetsMake(10, 10, 10, -50)
+        let padding = UIEdgeInsetsMake(10, 10, 10, -10)
         let superview = self.view
         
         var playlistTitleLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 300, height: 200))
         playlistTitleLabel.text = "Playlist Title"
         playlistTitleLabel.textColor = UIColor.whiteColor()
+        playlistTitleLabel.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         playlistTitleLabel.textAlignment = NSTextAlignment.Left
         playlistTitleLabel.font = UIFont(name: "HelveticaNeue", size: CGFloat(17))
         self.view.addSubview(playlistTitleLabel)
@@ -43,7 +50,6 @@ class PlaylistDetailsViewController: UIViewController {
                 playlistTitleField.text = currentPlaylist.title
             }
         }
-        playlistTitleField.backgroundColor = UIColor.blackColor()
         playlistTitleField.textColor = UIColor.whiteColor()
         playlistTitleField.layer.borderWidth = 1
         playlistTitleField.layer.borderColor = UIColor.whiteColor().CGColor
@@ -57,6 +63,7 @@ class PlaylistDetailsViewController: UIViewController {
         var playlistIDLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 300, height: 200))
         playlistIDLabel.text = "Playlist ID (can paste a URL)"
         playlistIDLabel.textColor = UIColor.whiteColor()
+        playlistIDLabel.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         playlistIDLabel.textAlignment = NSTextAlignment.Left
         playlistIDLabel.font = UIFont(name: "HelveticaNeue", size: CGFloat(17))
         self.view.addSubview(playlistIDLabel)
@@ -80,9 +87,7 @@ class PlaylistDetailsViewController: UIViewController {
             make.top.equalTo(playlistIDLabel.snp_bottom).with.offset(padding.top)
             make.left.equalTo(superview.snp_left).with.offset(padding.left)
             make.right.equalTo(superview.snp_right).with.offset(padding.right)
-        }
-        
-        self.view.backgroundColor = UIColor.blackColor()
+        }        
         
     }
 

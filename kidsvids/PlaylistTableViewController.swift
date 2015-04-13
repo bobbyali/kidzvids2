@@ -15,6 +15,10 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+                
         let newButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addPlaylistButton:")
         self.navigationItem.rightBarButtonItem = newButton
         
@@ -23,6 +27,9 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.dataSource = self
         tableView.registerClass(PlaylistTableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         tableView.rowHeight = 44;
+        
+        tableView.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!).colorWithAlphaComponent(0.5)
+        
         self.view.addSubview(tableView)
     }
     

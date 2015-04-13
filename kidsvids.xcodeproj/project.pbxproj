@@ -11,6 +11,7 @@
 		C53245D21AC95DE000390D2B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C53245D11AC95DE000390D2B /* Images.xcassets */; };
 		C53245D51AC95DE000390D2B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53245D31AC95DE000390D2B /* LaunchScreen.xib */; };
 		C53245E11AC95DE100390D2B /* kidsvidsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53245E01AC95DE100390D2B /* kidsvidsTests.swift */; };
+		C5A12E161ADC3826009C480F /* changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5A12E151ADC3826009C480F /* changelog.txt */; };
 		C5A682E11AC96CBE00F8E347 /* GridCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682E01AC96CBE00F8E347 /* GridCollectionViewController.swift */; };
 		C5A682E31AC96CE400F8E347 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682E21AC96CE400F8E347 /* Playlist.swift */; };
 		C5A682E61AC96E2D00F8E347 /* PlaylistCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682E51AC96E2D00F8E347 /* PlaylistCollection.swift */; };
@@ -49,6 +50,7 @@
 		C53245DA1AC95DE000390D2B /* kidsvidsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kidsvidsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53245DF1AC95DE100390D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C53245E01AC95DE100390D2B /* kidsvidsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kidsvidsTests.swift; sourceTree = "<group>"; };
+		C5A12E151ADC3826009C480F /* changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog.txt; sourceTree = "<group>"; };
 		C5A682E01AC96CBE00F8E347 /* GridCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewController.swift; sourceTree = "<group>"; };
 		C5A682E21AC96CE400F8E347 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		C5A682E51AC96E2D00F8E347 /* PlaylistCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollection.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 		C53245BC1AC95DE000390D2B = {
 			isa = PBXGroup;
 			children = (
+				C5A12E151ADC3826009C480F /* changelog.txt */,
 				C5C2AAD51ACEAEA6001B55AA /* Crashlytics.framework */,
 				C5C2AAD61ACEAEA6001B55AA /* Fabric.framework */,
 				C5A682F31AC9B27600F8E347 /* bridge.h */,
@@ -290,6 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5A12E161ADC3826009C480F /* changelog.txt in Resources */,
 				C53245D51AC95DE000390D2B /* LaunchScreen.xib in Resources */,
 				C53245D21AC95DE000390D2B /* Images.xcassets in Resources */,
 			);

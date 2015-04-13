@@ -1,0 +1,5 @@
+Version 1.1(6) - 13th April 2015
++ Added fixed position top/bottom instruction labels on Grid view
++ Added styling to settings menus
++ Made icon sizing setting persistent
++ Added shake to stop video playback

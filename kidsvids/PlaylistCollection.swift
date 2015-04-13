@@ -18,6 +18,7 @@ class PlaylistCollection {
     let keyForListOfPlaylistTitles = "listOfPlaylistTitles"
     let keyForListOfPlaylistIDs    = "listOfPlaylistIDs"
     let keyForCurrentPlaylist      = "currentPlaylist"
+    let keyForCurrentIconScale     = "currentIconScale"
     
     // define as singleton class
     class var sharedInstance: PlaylistCollection {
@@ -51,6 +52,7 @@ class PlaylistCollection {
         defaults.setObject(arrayOfTitles, forKey: keyForListOfPlaylistTitles)
         defaults.setObject(arrayOfIDs, forKey: keyForListOfPlaylistIDs)
         defaults.setObject(self.currentPlaylist, forKey: keyForCurrentPlaylist)
+        defaults.setObject(self.iconScale, forKey: keyForCurrentIconScale)
         //defaults.synchronize()
     }
     
@@ -58,6 +60,7 @@ class PlaylistCollection {
         var readArrayOfTitles: [NSString]? = defaults.objectForKey(keyForListOfPlaylistTitles) as! [NSString]?
         var readArrayOfIDs: [NSString]? = defaults.objectForKey(keyForListOfPlaylistIDs) as! [NSString]?
         var savedCurrentPlaylist: Int? = defaults.valueForKey(keyForCurrentPlaylist) as! Int?
+        var savedIconScale: Float? = defaults.valueForKey(keyForCurrentIconScale) as! Float?
         var blnEmptyUserDefaults = false
         
         if let arrayOfTitles = readArrayOfTitles {
@@ -68,6 +71,7 @@ class PlaylistCollection {
                     }
                 }
                 self.currentPlaylist = savedCurrentPlaylist!
+                self.iconScale = savedIconScale!
             }
             else {
                 blnEmptyUserDefaults = true
