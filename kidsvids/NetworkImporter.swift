@@ -9,7 +9,11 @@ import AFNetworking
 
 protocol NetworkImporterDelegate {
     func fetchCompleted(nextPageToken:String?, lastPage:Bool)
-    func fetchFailed() 
+    func fetchFailed()
+}
+
+protocol NetworkCheckerDelegate {
+    func validityCheck(passed:Bool)
 }
 
 class NetworkImporter {
@@ -24,6 +28,7 @@ class NetworkImporter {
     
     var playlists: PlaylistCollection = PlaylistCollection.sharedInstance
     var delegate: NetworkImporterDelegate?
+    var checker: NetworkCheckerDelegate?
     
     var isBusy:Bool = false
     
@@ -89,6 +94,39 @@ class NetworkImporter {
         })
         
     }
+    
+    
+    
+    
+    func checkPlaylistIDValidity(playlistID:String) {
+        
+        let manager = AFHTTPRequestOperationManager()
+        println("Validity check")
+        
+        var tempSearchString = self.youtubePlaylistURLPrefix + playlistID + self.youtubeKeySuffix
+        
+        manager.GET( tempSearchString ,
+            parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
+
+                if let dataArray = responseObject["items"] as? [AnyObject] {
+                    println("Valid!")
+                    self.checker?.validityCheck(true)
+                } else {
+                    println("No items")
+                    self.checker?.validityCheck(false)
+                }
+                
+                
+            },
+            failure: { (operation: AFHTTPRequestOperation!,error: NSError!) in
+                println("Error: " + error.localizedDescription)
+                println("Invalid!")
+                self.checker?.validityCheck(false)
+        })
+        
+    }
+    
     
 }
 

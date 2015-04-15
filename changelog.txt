@@ -3,3 +3,6 @@ Version 1.1(6) - 13th April 2015
 + Added styling to settings menus
 + Made icon sizing setting persistent
 + Added shake to stop video playback
++ Added swipes to change playlist
++ Added instructions screens
++ Added form validation for changing / adding playlists

@@ -95,28 +95,22 @@ class PlaylistCollection {
             self.currentPlaylist = 0
             saveCollection()
         }
-        
+    }
+    
+    func getNextPlaylist() {
+        if self.currentPlaylist == self.list.count - 1 {
+            self.currentPlaylist = 0
+        } else {
+            self.currentPlaylist! += 1
+        }
+    }
+    
+    func getPreviousPlaylist() {
+        if self.currentPlaylist == 0 {
+            self.currentPlaylist = self.list.count - 1
+        } else {
+            self.currentPlaylist! -= 1
+        }
     }
     
 }
-
-
-
-/*
-let def = NSUserDefaults.standardUserDefaults()
-var key = "keySave"
-
-var array1: [NSString] = [NSString]()
-array1.append("value 1")
-array1.append("value 2")
-
-//save
-var defaults = NSUserDefaults.standardUserDefaults()
-defaults.setObject(array1, forKey: key)
-defaults.synchronize()
-
-//read
-if let testArray : AnyObject? = defaults.objectForKey(key) {
-var readArray : [NSString] = testArray! as [NSString]
-}
-*/

@@ -7,12 +7,14 @@
 
 import UIKit
 
-class PlaylistDetailsViewController: UIViewController {
+class PlaylistDetailsViewController: UIViewController, NetworkCheckerDelegate {
 
     var playlistTitleField: UITextField!
     var playlistIDField: UITextField!
     var playlists: PlaylistCollection = PlaylistCollection.sharedInstance
     var isNewPlaylist: Bool = false
+    var playlistValidator: NetworkImporter! = NetworkImporter()
+    var inputPlaylistID: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +91,7 @@ class PlaylistDetailsViewController: UIViewController {
             make.right.equalTo(superview.snp_right).with.offset(padding.right)
         }        
         
+        self.playlistValidator.checker = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,18 +101,14 @@ class PlaylistDetailsViewController: UIViewController {
     
     // MARK: Buttons
     func savePlaylist(sender:UIButton!) {
-        if isNewPlaylist {
-            var newPlaylist = Playlist(title: self.playlistTitleField.text, playlistID: processStringForPlaylistID(self.playlistIDField.text))
-            self.playlists.list.append(newPlaylist)
-            self.playlists.currentPlaylist = self.playlists.list.count-1
-        } else {
-            if let currentPlaylist = self.playlists.getCurrentPlaylist() {
-                currentPlaylist.title = self.playlistTitleField.text
-                currentPlaylist.playlistID = processStringForPlaylistID(self.playlistIDField.text)
-            }
+        if self.playlistTitleField.text == "" || self.playlistIDField.text == "" {
+            var alert = UIAlertController(title: "Can't Leave Anything Blank", message: "Please make sure you've filled in both boxes.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Return", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
         }
-        self.playlists.saveCollection()
-        self.navigationController?.popViewControllerAnimated(true)
+        self.inputPlaylistID = processStringForPlaylistID(self.playlistIDField.text)
+        self.playlistValidator.checkPlaylistIDValidity(self.inputPlaylistID!)
     }
 
     func processStringForPlaylistID(url:String) -> String {
@@ -131,6 +130,30 @@ class PlaylistDetailsViewController: UIViewController {
             return queryStrings["list"]!
         } else {
             return url
+        }
+    }
+    
+    func validityCheck(passed:Bool) {
+        if passed {
+            println("Save playlist")
+            if self.isNewPlaylist {
+                var newPlaylist = Playlist(title: self.playlistTitleField.text, playlistID: self.inputPlaylistID!)
+                self.playlists.list.append(newPlaylist)
+                self.playlists.currentPlaylist = self.playlists.list.count-1
+            } else {
+                if let currentPlaylist = self.playlists.getCurrentPlaylist() {
+                    currentPlaylist.title = self.playlistTitleField.text
+                    currentPlaylist.playlistID = self.inputPlaylistID!
+                }
+            }
+            self.playlists.saveCollection()
+            self.navigationController?.popViewControllerAnimated(true)
+        } else {
+            println("Don't save playlist")
+            var alert = UIAlertController(title: "PlaylistID Not Valid", message: "The PlaylistID or URL you entered wasn't valid.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Return", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+
         }
     }
     

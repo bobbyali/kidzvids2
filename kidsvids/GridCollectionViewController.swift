@@ -32,6 +32,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     var loadedTwoSetsForiPad: Bool = false
     var isDataReady: Bool = false
     var updateCells: Bool = false
+    var inIntro: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +87,17 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         longPressFinal.numberOfTouchesRequired = 1
         longPressFinal.delegate = self
         self.view.addGestureRecognizer(longPressFinal)
+        
+        
+        var leftSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+        var rightSwipe = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+        
+        leftSwipe.direction = .Left
+        rightSwipe.direction = .Right
+        
+        view.addGestureRecognizer(leftSwipe)
+        view.addGestureRecognizer(rightSwipe)
+        
         
         activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
         view.addSubview(activityIndicatorView)
@@ -274,6 +286,21 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         }        
     }
     
+    func handleSwipes(sender:UISwipeGestureRecognizer) {
+        if !self.inIntro && self.isDataReady {
+            if (sender.direction == .Left) {
+                println("Swipe Left")
+                self.playlists.getPreviousPlaylist()
+            }
+            if (sender.direction == .Right) {
+                println("Swipe Right")
+                self.playlists.getNextPlaylist()
+            }
+            refreshViewController()
+        }
+    }
+    
+    
     // MARK: Delegate methods
     func fetchCompleted(nextPageToken:String?, lastPage:Bool) {
         if let token = nextPageToken {
@@ -311,8 +338,11 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         println("b fetchFailed")
     }
     
-    
+    // MARK: Intro screens
     func showIntro() {
+        
+        self.inIntro = true
+        
         var page1: EAIntroPage = EAIntroPage()
         page1.title = "Welcome to KidsVids!"
         page1.desc = "KidsVids is a safe and simple YouTube player designed to be used by children over the age of 2."
@@ -321,7 +351,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
 
         
         var page2: EAIntroPage = EAIntroPage()
-        page2.title = "Playlists"
+        page2.title = "Child Friendly Videos"
         page2.desc = "KidsVids restricts videos to YouTube playlists containing child-friendly videos. There are several included, and you can also add your own custom Playlists."
         page2.titleIconView = UIImageView(image: UIImage(named: "YouTube Tick"))
         page2.titleIconPositionY = 100
@@ -360,47 +390,26 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     func introDidFinish(introView: EAIntroView!) {
         println("intro ended")
+        self.inIntro = false
     }
     
+    // MARK: Orientations
+    override func shouldAutorotate() -> Bool {
+        println("checking rotations...")
+        if self.inIntro {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    override func supportedInterfaceOrientations() -> Int {
+        println("rotations...")
+        if self.inIntro {
+            return Int(UIInterfaceOrientationMask.Portrait.rawValue)
+        } else {
+            return Int(UIInterfaceOrientationMask.All.rawValue)
+        }
+    }
     
 }
-
-
-/*
-- (void)introDidFinish:(EAIntroView *)introView {
-NSLog(@"introDidFinish callback");
-[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-}
-
-- (void)showIntroWithCrossDissolve {
-EAIntroPage *page1 = [EAIntroPage page];
-page1.title = @"Hello world";
-page1.desc = sampleDescription1;
-page1.bgImage = [UIImage imageNamed:@"bg1"];
-page1.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title1"]];
-
-EAIntroPage *page2 = [EAIntroPage page];
-page2.title = @"This is page 2";
-page2.desc = sampleDescription2;
-page2.bgImage = [UIImage imageNamed:@"bg2"];
-page2.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title2"]];
-
-EAIntroPage *page3 = [EAIntroPage page];
-page3.title = @"This is page 3";
-page3.desc = sampleDescription3;
-page3.bgImage = [UIImage imageNamed:@"bg3"];
-page3.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title3"]];
-
-EAIntroPage *page4 = [EAIntroPage page];
-page4.title = @"This is page 4";
-page4.desc = sampleDescription4;
-page4.bgImage = [UIImage imageNamed:@"bg4"];
-page4.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title4"]];
-
-EAIntroView *intro = [[EAIntroView alloc] initWithFrame:rootView.bounds andPages:@[page1,page2,page3,page4]];
-[intro setDelegate:self];
-
-[intro showInView:rootView animateDuration:0.3];
-}
-
-*/
