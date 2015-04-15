@@ -11,5 +11,6 @@
 
 #import "AFNetworking/AFNetworking.h"
 #import <XCDYouTubeKit/XCDYouTubeKit.h>
+#import "EAIntroView/EAIntroView.h"
 
 #endif

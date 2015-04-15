@@ -71,7 +71,11 @@ class PlaylistCollection {
                     }
                 }
                 self.currentPlaylist = savedCurrentPlaylist!
-                self.iconScale = savedIconScale!
+                if let iconScale = savedIconScale {
+                    self.iconScale = iconScale
+                } else {
+                    self.iconScale = 0.77
+                }
             }
             else {
                 blnEmptyUserDefaults = true

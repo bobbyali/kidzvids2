@@ -50,12 +50,14 @@ code_sign() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'AFNetworking.framework'
   install_framework 'EAIntroView.framework'
+  install_framework 'EARestrictedScrollView.framework'
   install_framework 'Snap.framework'
   install_framework 'XCDYouTubeKit.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'AFNetworking.framework'
   install_framework 'EAIntroView.framework'
+  install_framework 'EARestrictedScrollView.framework'
   install_framework 'Snap.framework'
   install_framework 'XCDYouTubeKit.framework'
 fi

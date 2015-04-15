@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-EARestrictedScrollView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Snap.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4E99D8CC1C64B09525CC0D82</key>
+		<key>36F82413D65DB0FFD54A26B9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>83ED312E3A67DAFC4A27F744</key>
+		<key>5741DA6158CC07EFE12FD326</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9A16F104D3308B73185368C3</key>
+		<key>87A9E37126DFDE1321071312</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AA1CDCA5FDF4C6277F3C976D</key>
+		<key>99F4102F7E4C5E772E085BA5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B50B086E1F185E78A298B0D0</key>
+		<key>D36094B035FC3A4D38414F63</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F0053C7CEB23F68E465D8701</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -9,10 +9,11 @@
 // (extra comment line)
 
 import UIKit
+import EAIntroView
 
 let mySpecialNotificationKey = "com.azukiapps.fetchedVideoIDs"
 
-class GridCollectionViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate, NetworkImporterDelegate {
+class GridCollectionViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate, NetworkImporterDelegate, EAIntroDelegate {
 
     private let reuseIdentifier = "videoCell"
     
@@ -34,9 +35,9 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
-
+        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
@@ -91,6 +92,8 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         activityIndicatorView.center = view.center
         activityIndicatorView.hidesWhenStopped = true
         activityIndicatorView.stopAnimating()
+        
+        showIntro()
 
     }
 
@@ -308,4 +311,96 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         println("b fetchFailed")
     }
     
+    
+    func showIntro() {
+        var page1: EAIntroPage = EAIntroPage()
+        page1.title = "Welcome to KidsVids!"
+        page1.desc = "KidsVids is a safe and simple YouTube player designed to be used by children over the age of 2."
+        page1.titleIconView = UIImageView(image: UIImage(named: "Phone and Tick"))
+        page1.bgColor = UIColor.blackColor()
+
+        
+        var page2: EAIntroPage = EAIntroPage()
+        page2.title = "Playlists"
+        page2.desc = "KidsVids restricts videos to YouTube playlists containing child-friendly videos. There are several included, and you can also add your own custom Playlists."
+        page2.titleIconView = UIImageView(image: UIImage(named: "YouTube Tick"))
+        page2.titleIconPositionY = 100
+        page2.bgColor = UIColor.blackColor()
+        
+        
+        var page3: EAIntroPage = EAIntroPage()
+        page3.title = "Easy To Use"
+        page3.desc = "KidsVids shows a grid of pictures of videos from a YouTube Playlist. Children can start a video by touching a picture. When the video ends, KidsVids automatically returns to the grid."
+        page3.titleIconView = UIImageView(image: UIImage(named: "Grid"))
+        page3.bgColor = UIColor.blackColor()
+        
+        var page4: EAIntroPage = EAIntroPage()
+        page4.title = "Simple Controls"
+        page4.desc = "There are no buttons to press. To stop a video early, simply shake the device. To load more videos, scroll down. To change playlists, swipe to the side."
+        page4.titleIconView = UIImageView(image: UIImage(named: "Phone and Gestures"))
+        page4.bgColor = UIColor.blackColor()
+        
+        var page5: EAIntroPage = EAIntroPage()
+        page5.title = "Settings"
+        page5.desc = "To access the settings menu, touch and hold the screen for a few seconds. You'll see a red bar appear. When it turns green, stop touching the screen, and the settings screen will load."
+        page5.titleIconView = UIImageView(image: UIImage(named: "Phone and Touch"))
+        page5.bgColor = UIColor.blackColor()
+
+        var page6: EAIntroPage = EAIntroPage()
+        page6.title = "Have Fun!"
+        page6.desc = "If you need any assistance or have any feedback, you can contact us at support@azukiapps.co.uk."
+        page6.titleIconView = UIImageView(image: UIImage(named: "Phone and Tick"))
+        page6.bgColor = UIColor.blackColor()
+        
+        var intro: EAIntroView = EAIntroView(frame: self.view.bounds, andPages: [page1 , page2, page3, page4, page5, page6])
+        intro.delegate = self
+        intro.showInView(self.view, animateDuration: 0.3)
+
+    }
+    
+    func introDidFinish(introView: EAIntroView!) {
+        println("intro ended")
+    }
+    
+    
 }
+
+
+/*
+- (void)introDidFinish:(EAIntroView *)introView {
+NSLog(@"introDidFinish callback");
+[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+}
+
+- (void)showIntroWithCrossDissolve {
+EAIntroPage *page1 = [EAIntroPage page];
+page1.title = @"Hello world";
+page1.desc = sampleDescription1;
+page1.bgImage = [UIImage imageNamed:@"bg1"];
+page1.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title1"]];
+
+EAIntroPage *page2 = [EAIntroPage page];
+page2.title = @"This is page 2";
+page2.desc = sampleDescription2;
+page2.bgImage = [UIImage imageNamed:@"bg2"];
+page2.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title2"]];
+
+EAIntroPage *page3 = [EAIntroPage page];
+page3.title = @"This is page 3";
+page3.desc = sampleDescription3;
+page3.bgImage = [UIImage imageNamed:@"bg3"];
+page3.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title3"]];
+
+EAIntroPage *page4 = [EAIntroPage page];
+page4.title = @"This is page 4";
+page4.desc = sampleDescription4;
+page4.bgImage = [UIImage imageNamed:@"bg4"];
+page4.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title4"]];
+
+EAIntroView *intro = [[EAIntroView alloc] initWithFrame:rootView.bounds andPages:@[page1,page2,page3,page4]];
+[intro setDelegate:self];
+
+[intro showInView:rootView animateDuration:0.3];
+}
+
+*/
