@@ -34,7 +34,7 @@ class PlaylistDetailsViewController: UIViewController, NetworkCheckerDelegate {
         let superview = self.view
         
         var playlistTitleLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 300, height: 200))
-        playlistTitleLabel.text = "Playlist Title"
+        playlistTitleLabel.text = NSLocalizedString("playlist_title", comment: "Playlist Title")
         playlistTitleLabel.textColor = UIColor.whiteColor()
         playlistTitleLabel.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         playlistTitleLabel.textAlignment = NSTextAlignment.Left
@@ -63,7 +63,8 @@ class PlaylistDetailsViewController: UIViewController, NetworkCheckerDelegate {
         }
 
         var playlistIDLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 300, height: 200))
-        playlistIDLabel.text = "Playlist ID (can paste a URL)"
+        playlistIDLabel.text = NSLocalizedString("playlist_id", comment: "Playlist ID")
+
         playlistIDLabel.textColor = UIColor.whiteColor()
         playlistIDLabel.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         playlistIDLabel.textAlignment = NSTextAlignment.Left

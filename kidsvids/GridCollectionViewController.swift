@@ -24,6 +24,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     var topInfoLabel: UILabel = UILabel()
     var bottomInfoLabel: UILabel = UILabel()
     var settingsLoadBar: SettingsLoadBar = SettingsLoadBar(frame: CGRect(x: 20, y: 0, width: 0, height: 20))
+    var settingsLoadCircle: SettingsLoadCircle = SettingsLoadCircle(frame: CGRect(x: 20, y: 20, width: 50, height: 50))
     
     var longPressInit = UILongPressGestureRecognizer()
     var longPressFinal = UILongPressGestureRecognizer()
@@ -248,12 +249,19 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     func showLongTouchLoadInProgress(sender: UILongPressGestureRecognizer) {
         let touchPosition = sender.locationInView(self.collectionView)
         if sender.state == UIGestureRecognizerState.Began {
-            self.settingsLoadBar.setYPos(Int(touchPosition.y))
-            self.collectionView?.addSubview(self.settingsLoadBar)
-            self.settingsLoadBar.animateBar()
+            //self.settingsLoadBar.setYPos(Int(touchPosition.y))
+            //self.collectionView?.addSubview(self.settingsLoadBar)
+            //self.settingsLoadBar.animateBar()
+            
+            self.settingsLoadCircle.setPos(Int(touchPosition.x), ypos: Int(touchPosition.y))
+            self.collectionView?.addSubview(self.settingsLoadCircle)
+            self.settingsLoadCircle.animateCircle(1.0)
+
         } else if sender.state == UIGestureRecognizerState.Ended {
-            self.settingsLoadBar.setBarWidth(0)
-            self.settingsLoadBar.removeFromSuperview()
+            //self.settingsLoadBar.setBarWidth(0)
+            //self.settingsLoadBar.removeFromSuperview()
+            self.settingsLoadCircle.setCircleArcAngle(0.0)
+            self.settingsLoadCircle.removeFromSuperview()
         }
     }
     
@@ -264,7 +272,8 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
             self.navigationController?.pushViewController(vc, animated: true)
 
         } else if sender.state == UIGestureRecognizerState.Began {
-            self.settingsLoadBar.animateSettingsLoaded()
+            //self.settingsLoadBar.animateSettingsLoaded()
+            self.settingsLoadCircle.animateSettingsLoaded()
         }
     }
     

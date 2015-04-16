@@ -33,7 +33,9 @@ class SettingsViewController: UIViewController {
         
         labelPlaylists = UILabel(frame: CGRectMake(0, 0, 300, 200))
         //labelPlaylists.text = "\(self.playlists.list.count) Playlists out of \(self.numTotalPlaylists) currently used."
-        labelPlaylists.text = "You have \(self.playlists.list.count) Playlists set up."
+        labelPlaylists.text = NSLocalizedString("settings_total_pre", comment: "You have...") + String(self.playlists.list.count) + NSLocalizedString("settings_total_post", comment: "...Playlists set up.")
+        
+        //"You have \(self.playlists.list.count) Playlists set up."
         labelPlaylists.textColor = UIColor.whiteColor()
         labelPlaylists.font = UIFont(name: "Avenir", size: CGFloat(17))
         self.view.addSubview(labelPlaylists)
@@ -46,7 +48,7 @@ class SettingsViewController: UIViewController {
         let editPlaylistButton   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         editPlaylistButton.frame = CGRectMake(0, 0, 300, 200)
         editPlaylistButton.backgroundColor = UIColor.blackColor()
-        editPlaylistButton.setTitle("Change or Edit Playlists", forState: UIControlState.Normal)
+        editPlaylistButton.setTitle(NSLocalizedString("settings_button", comment: "Change or Edit Playlist"), forState: UIControlState.Normal)
         //editPlaylistButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         editPlaylistButton.layer.cornerRadius = 5
         editPlaylistButton.layer.borderWidth = 1
@@ -61,7 +63,7 @@ class SettingsViewController: UIViewController {
         }
         
         var labelSlider = UILabel(frame: CGRectMake(0, 0, 300, 200))
-        labelSlider.text = "Set size of video thumbnails:"
+        labelSlider.text = NSLocalizedString("settings_size", comment: "Set size of video thumbnails")
         labelSlider.textColor = UIColor.whiteColor()
         labelSlider.font = UIFont(name: "Avenir", size: CGFloat(17))
         self.view.addSubview(labelSlider)
@@ -94,7 +96,8 @@ class SettingsViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        labelPlaylists.text = "You have \(self.playlists.list.count) Playlists set up."        
+        //labelPlaylists.text = "You have \(self.playlists.list.count) Playlists set up."
+        labelPlaylists.text = NSLocalizedString("settings_total_pre", comment: "You have...") + String(self.playlists.list.count) + NSLocalizedString("settings_total_post", comment: "...Playlists set up.")
     }
     
     // MARK: Buttons and Sliders

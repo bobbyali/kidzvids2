@@ -6,3 +6,8 @@ Version 1.1(6) - 13th April 2015
 + Added swipes to change playlist
 + Added instructions screens
 + Added form validation for changing / adding playlists
+
+Version 1.1(7) - 16th April 2015
++ Added internationalisation (French)
++ Fixed bug where faulty Playlists would save
++ Replaced load bar with load circle

@@ -13,6 +13,7 @@
 		C53245E11AC95DE100390D2B /* kidsvidsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53245E01AC95DE100390D2B /* kidsvidsTests.swift */; };
 		C5A12E161ADC3826009C480F /* changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5A12E151ADC3826009C480F /* changelog.txt */; };
 		C5A18C121ADF2BF8006D118D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5A18C141ADF2BF8006D118D /* Localizable.strings */; };
+		C5A18C191ADFC430006D118D /* SettingsLoadCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A18C181ADFC430006D118D /* SettingsLoadCircle.swift */; };
 		C5A682E11AC96CBE00F8E347 /* GridCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682E01AC96CBE00F8E347 /* GridCollectionViewController.swift */; };
 		C5A682E31AC96CE400F8E347 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682E21AC96CE400F8E347 /* Playlist.swift */; };
 		C5A682E61AC96E2D00F8E347 /* PlaylistCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682E51AC96E2D00F8E347 /* PlaylistCollection.swift */; };
@@ -56,6 +57,7 @@
 		C5A18C131ADF2BF8006D118D /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C5A18C151ADF2DF9006D118D /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C5A18C171ADF329D006D118D /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C5A18C181ADFC430006D118D /* SettingsLoadCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLoadCircle.swift; sourceTree = "<group>"; };
 		C5A682E01AC96CBE00F8E347 /* GridCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewController.swift; sourceTree = "<group>"; };
 		C5A682E21AC96CE400F8E347 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		C5A682E51AC96E2D00F8E347 /* PlaylistCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollection.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				C5A682F41AC9E31A00F8E347 /* SettingsLoadBar.swift */,
+				C5A18C181ADFC430006D118D /* SettingsLoadCircle.swift */,
 				C5A682EF1AC9825500F8E347 /* VideoPhotoCell.swift */,
 				C5A682FA1ACC1EF300F8E347 /* PlaylistTableViewCell.swift */,
 			);
@@ -385,6 +388,7 @@
 				C5A682FD1ACC2B9D00F8E347 /* PlaylistDetailsViewController.swift in Sources */,
 				C5A682F21AC99F1B00F8E347 /* PlayerViewController.swift in Sources */,
 				C5A682E11AC96CBE00F8E347 /* GridCollectionViewController.swift in Sources */,
+				C5A18C191ADFC430006D118D /* SettingsLoadCircle.swift in Sources */,
 				C5A682F71AC9F1FC00F8E347 /* SettingsViewController.swift in Sources */,
 				C5A682F01AC9825500F8E347 /* VideoPhotoCell.swift in Sources */,
 				C5A682E81AC96F3800F8E347 /* NetworkImporter.swift in Sources */,

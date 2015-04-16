@@ -43,7 +43,7 @@ class PlaylistTableViewCell: UITableViewCell {
         
         let buttonDelete   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         buttonDelete.frame = CGRectMake(100, 10, 100, 10)
-        buttonDelete.setTitle("Delete", forState: UIControlState.Normal)
+        buttonDelete.setTitle(NSLocalizedString("button_delete", comment: "Delete"), forState: UIControlState.Normal)
         buttonDelete.backgroundColor = UIColor.blackColor()
         buttonDelete.layer.cornerRadius = 5
         buttonDelete.layer.borderWidth = 1
@@ -62,7 +62,7 @@ class PlaylistTableViewCell: UITableViewCell {
         
         let buttonEdit   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         buttonEdit.frame = CGRectMake(100, 10, 100, 10)
-        buttonEdit.setTitle("Edit", forState: UIControlState.Normal)
+        buttonEdit.setTitle(NSLocalizedString("button_edit", comment: "Edit"), forState: UIControlState.Normal)
         buttonEdit.backgroundColor = UIColor.blackColor()
         buttonEdit.layer.cornerRadius = 5
         buttonEdit.layer.borderWidth = 1
