@@ -15,6 +15,10 @@ class Playlist {
     var isValidPlaylistID: Bool = true
     var videoIDs = [String]()
     
+    var nextPageToken:String?
+    var firstPage:Bool = true
+    var lastPage:Bool = false
+    
     convenience init() {
         var tempTitle = ""
         var tempID = ""

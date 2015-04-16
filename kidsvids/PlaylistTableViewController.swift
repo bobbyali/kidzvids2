@@ -36,7 +36,7 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidAppear(animated: Bool) {
         self.tableView.reloadData()
         var currentPlaylistID = NSIndexPath(forRow: playlists.currentPlaylist!, inSection: 0)
-        //tableView.selectRowAtIndexPath(currentPlaylistID, animated: false, scrollPosition: UITableViewScrollPosition.None)
+        tableView.selectRowAtIndexPath(currentPlaylistID, animated: false, scrollPosition: UITableViewScrollPosition.None)
     }
 
     
@@ -74,7 +74,6 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
         return cell!
     }
     
-
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.playlists.currentPlaylist = indexPath.row
         self.playlists.saveCollection()

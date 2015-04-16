@@ -22,7 +22,7 @@ class PlaylistTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        self.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.0)
+        self.backgroundColor = UIColor.clearColor()
         
         titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 100))
         titleLabel.text = ""
@@ -77,6 +77,10 @@ class PlaylistTableViewCell: UITableViewCell {
             make.width.equalTo(60)
         }
         
+        if self.selected {
+            self.titleLabel.textColor = UIColor.redColor()
+        }
+        
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -92,6 +96,11 @@ class PlaylistTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        if selected {
+            self.titleLabel.textColor = UIColor.redColor()
+        } else {
+            self.titleLabel.textColor = UIColor.whiteColor()
+        }
     }
     
     

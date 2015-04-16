@@ -216,22 +216,20 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     // MARK: Events
     func refreshViewController() {
-        
         if let currentPlaylist = self.playlists.getCurrentPlaylist() {
             if currentPlaylist.videoIDs.count == 0 {
                 // fetch videos when presented with an empty playlist
                 if !self.importer.isBusy {
+                    println("boooooogie")
                     self.importer.delegate = self
                     self.isDataReady = false
                     self.activityIndicatorView.startAnimating()
-                    if let currentPlaylist = self.playlists.getCurrentPlaylist() {
-                        if currentPlaylist.getNumberOfVideos() == 0 {
-                            self.importer.firstPage = true
-                        }
-                    }
+                    currentPlaylist.firstPage = true
+                    currentPlaylist.nextPageToken = nil
                     self.importer.fetchNextSetOfVideoIDs()
                 }
             } else {
+                println("moooooogie")
                 self.collectionView?.reloadData()
             }
         }
@@ -311,14 +309,15 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     
     
     // MARK: Delegate methods
-    func fetchCompleted(nextPageToken:String?, lastPage:Bool) {
+    func fetchCompleted(nextPageToken:String?, lastPage isLastPage:Bool) {
         if let token = nextPageToken {
-            self.importer.nextPageToken = token
+            self.playlists.getCurrentPlaylist()!.nextPageToken = token
         } else {
-            self.importer.nextPageToken = nil
+            self.playlists.getCurrentPlaylist()!.nextPageToken = nil
         }
-        self.importer.lastPage = lastPage
-        self.importer.firstPage = false
+        self.playlists.getCurrentPlaylist()!.lastPage = isLastPage
+
+        self.playlists.getCurrentPlaylist()!.firstPage = false
         self.activityIndicatorView.stopAnimating()
         self.importer.isBusy = false
         self.isDataReady = true
@@ -405,20 +404,20 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
     // MARK: Orientations
     override func shouldAutorotate() -> Bool {
         println("checking rotations...")
-        if self.inIntro {
+        //if self.inIntro {
             return false
-        } else {
-            return true
-        }
+        //} else {
+        //    return true
+       // }
     }
     
     override func supportedInterfaceOrientations() -> Int {
         println("rotations...")
-        if self.inIntro {
+        //if self.inIntro {
             return Int(UIInterfaceOrientationMask.Portrait.rawValue)
-        } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
-        }
+        //} else {
+        //    return Int(UIInterfaceOrientationMask.All.rawValue)
+       // }
     }
     
 }

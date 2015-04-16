@@ -103,6 +103,7 @@ class PlaylistCollection {
         } else {
             self.currentPlaylist! += 1
         }
+        saveCollection()
     }
     
     func getPreviousPlaylist() {
@@ -111,6 +112,7 @@ class PlaylistCollection {
         } else {
             self.currentPlaylist! -= 1
         }
+        saveCollection()
     }
     
 }

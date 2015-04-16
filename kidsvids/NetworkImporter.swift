@@ -22,9 +22,6 @@ class NetworkImporter {
     let youtubeKeySuffix:String = "&key=AIzaSyDG2hPqOEDnKeaBW365MCc9KFZVHB8LUYs"
     
     var searchString:String = ""
-    var nextPageToken:String?
-    var firstPage:Bool = true
-    var lastPage:Bool = false
     
     var playlists: PlaylistCollection = PlaylistCollection.sharedInstance
     var delegate: NetworkImporterDelegate?
@@ -44,17 +41,17 @@ class NetworkImporter {
             if let currentPlaylist = self.playlists.getCurrentPlaylist() {
                 println("* d")
                 self.searchString = youtubePlaylistURLPrefix + currentPlaylist.playlistID + youtubeKeySuffix
-                if let nextPageToken = self.nextPageToken {
+                if let nextPageToken = currentPlaylist.nextPageToken {
                     println("* b")
                     self.searchString = self.searchString + "&pageToken=" + nextPageToken
                     queryYoutube(self.searchString)
-                } else if self.firstPage == true {
+                } else if currentPlaylist.firstPage == true {
                     println("* c")
                     queryYoutube(self.searchString)
                 } else { println("* e") } // else if lastPage == true then do nothing
             }
         }
-        return self.lastPage
+        return self.playlists.getCurrentPlaylist()!.lastPage
     }
     
 
@@ -69,7 +66,7 @@ class NetworkImporter {
         manager.GET( searchString ,
             parameters: nil,
             success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
-                
+                println("AF yes")
                 if let dataArray = responseObject["items"] as? [AnyObject] {
                     for dataObject in dataArray {
                         if let imageURLString = dataObject.valueForKeyPath("contentDetails.videoId") as? String {
@@ -80,16 +77,22 @@ class NetworkImporter {
                         }
                     }
                 }
-                
+                println("AF yes a")                
                 if let nextPageToken = responseObject["nextPageToken"] as? String {
+                    println("AF yes ab")
                     self.delegate?.fetchCompleted(nextPageToken, lastPage: false)
-                } else if self.firstPage == false {
+                } else if self.playlists.getCurrentPlaylist()!.firstPage == false {
+                    println("AF yes ac")
                     self.delegate?.fetchCompleted(nil, lastPage: true)
+                } else {
+                    println("AF yes ad")
+                    self.delegate?.fetchCompleted(nil, lastPage: false)
                 }
                 
             },
             failure: { (operation: AFHTTPRequestOperation!,error: NSError!) in
                 println("Error: " + error.localizedDescription)
+                println("AF no")
                 self.delegate?.fetchFailed()
         })
         

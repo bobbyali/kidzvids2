@@ -11,3 +11,6 @@ Version 1.1(7) - 16th April 2015
 + Added internationalisation (French)
 + Fixed bug where faulty Playlists would save
 + Replaced load bar with load circle
++ Fixed bug where selected playlist didn't show up in table view
++ Fixed bug with app freezing when swiping to side
+    (moved nextPageToken, firstPage, lastPage from NetworkImporter class to Playlist class)
