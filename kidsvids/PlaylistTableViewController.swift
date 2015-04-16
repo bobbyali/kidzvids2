@@ -28,7 +28,7 @@ class PlaylistTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.registerClass(PlaylistTableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         tableView.rowHeight = 44;
         
-        tableView.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!).colorWithAlphaComponent(0.5)
+        tableView.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!).colorWithAlphaComponent(1.0)
         
         self.view.addSubview(tableView)
     }

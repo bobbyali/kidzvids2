@@ -10,8 +10,8 @@ import UIKit
 class SettingsLoadCircle: UIView {
     
     var xpos:Int = 20
-    var height:Int = 75
-    var width:Int = 75
+    var height:Int = 150
+    var width:Int = 150
     var ypos:Int = 20
     var arcAngle:Float = 0.0
     let circleLayer: CAShapeLayer! = CAShapeLayer()

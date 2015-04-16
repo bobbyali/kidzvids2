@@ -58,6 +58,8 @@
 		C5A18C151ADF2DF9006D118D /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C5A18C171ADF329D006D118D /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C5A18C181ADFC430006D118D /* SettingsLoadCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLoadCircle.swift; sourceTree = "<group>"; };
+		C5A18C1A1ADFE2C4006D118D /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C5A18C1B1ADFE2C4006D118D /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C5A682E01AC96CBE00F8E347 /* GridCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewController.swift; sourceTree = "<group>"; };
 		C5A682E21AC96CE400F8E347 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		C5A682E51AC96E2D00F8E347 /* PlaylistCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollection.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				en,
 				Base,
 				fr,
+				pt,
 			);
 			mainGroup = C53245BC1AC95DE000390D2B;
 			productRefGroup = C53245C61AC95DE000390D2B /* Products */;
@@ -426,6 +429,7 @@
 				C53245D41AC95DE000390D2B /* Base */,
 				C5A18C0F1ADF2B52006D118D /* fr */,
 				C5A18C171ADF329D006D118D /* en */,
+				C5A18C1A1ADFE2C4006D118D /* pt */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -435,6 +439,7 @@
 			children = (
 				C5A18C131ADF2BF8006D118D /* en */,
 				C5A18C151ADF2DF9006D118D /* fr */,
+				C5A18C1B1ADFE2C4006D118D /* pt */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

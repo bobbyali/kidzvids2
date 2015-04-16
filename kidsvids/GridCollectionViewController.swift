@@ -61,7 +61,6 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         topInfoLabel.textAlignment = NSTextAlignment.Center
         topInfoLabel.backgroundColor = UIColor.blackColor()
         topInfoLabel.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        //                 cell.videoPhotoCell.autoresizingMask = UIViewAutoresizing.FlexibleWidth|UIViewAutoresizing.FlexibleHeight;
         self.view.addSubview(topInfoLabel)
         
         

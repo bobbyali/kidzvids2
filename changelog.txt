@@ -14,3 +14,8 @@ Version 1.1(7) - 16th April 2015
 + Fixed bug where selected playlist didn't show up in table view
 + Fixed bug with app freezing when swiping to side
     (moved nextPageToken, firstPage, lastPage from NetworkImporter class to Playlist class)
+
+Version 1.1(8) - 16th April 2015
++ Added Portuguese
++ Made the circle bigger (was hidden by finger)
++ Removed transparency from the settings menu screens
