@@ -53,7 +53,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         navigationController?.setNavigationBarHidden(true, animated: false)
         
         topInfoLabel = UILabel(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 20))
-        topInfoLabel.text = "Tap and hold for settings"
+        topInfoLabel.text = NSLocalizedString("grid_top", comment: "Tag at top of screen")
         topInfoLabel.font = UIFont(name: "HelveticaNeue", size: CGFloat(12))
         topInfoLabel.numberOfLines = 1
         topInfoLabel.textColor = UIColor.whiteColor()
@@ -65,7 +65,7 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         
         
         bottomInfoLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height-20, width: screenSize.width, height: 20))
-        bottomInfoLabel.text = "Scroll to bottom to fetch more videos"
+        bottomInfoLabel.text = NSLocalizedString("grid_bottom", comment: "Tag at bottom of screen")
         bottomInfoLabel.font = UIFont(name: "HelveticaNeue", size: CGFloat(12))
         bottomInfoLabel.numberOfLines = 1
         bottomInfoLabel.textColor = UIColor.whiteColor()
@@ -344,41 +344,41 @@ class GridCollectionViewController: UIViewController, UICollectionViewDelegateFl
         self.inIntro = true
         
         var page1: EAIntroPage = EAIntroPage()
-        page1.title = "Welcome to KidsVids!"
-        page1.desc = "KidsVids is a safe and simple YouTube player designed to be used by children over the age of 2."
+        page1.title = NSLocalizedString("intro_p1_title", comment: "Title of Intro Page 1")
+        page1.desc = NSLocalizedString("intro_p1_notes", comment: "Description for Intro Page 1")
         page1.titleIconView = UIImageView(image: UIImage(named: "Phone and Tick"))
         page1.bgColor = UIColor.blackColor()
 
         
         var page2: EAIntroPage = EAIntroPage()
-        page2.title = "Child Friendly Videos"
-        page2.desc = "KidsVids restricts videos to YouTube playlists containing child-friendly videos. There are several included, and you can also add your own custom Playlists."
+        page2.title = NSLocalizedString("intro_p2_title", comment: "Title of Intro Page 2")
+        page2.desc = NSLocalizedString("intro_p2_notes", comment: "Description for Intro Page 2")
         page2.titleIconView = UIImageView(image: UIImage(named: "YouTube Tick"))
         page2.titleIconPositionY = 100
         page2.bgColor = UIColor.blackColor()
         
         
         var page3: EAIntroPage = EAIntroPage()
-        page3.title = "Easy To Use"
-        page3.desc = "KidsVids shows a grid of pictures of videos from a YouTube Playlist. Children can start a video by touching a picture. When the video ends, KidsVids automatically returns to the grid."
+        page3.title = NSLocalizedString("intro_p3_title", comment: "Title of Intro Page 3")
+        page3.desc = NSLocalizedString("intro_p3_notes", comment: "Description for Intro Page 3")
         page3.titleIconView = UIImageView(image: UIImage(named: "Grid"))
         page3.bgColor = UIColor.blackColor()
         
         var page4: EAIntroPage = EAIntroPage()
-        page4.title = "Simple Controls"
-        page4.desc = "There are no buttons to press. To stop a video early, simply shake the device. To load more videos, scroll down. To change playlists, swipe to the side."
+        page4.title = NSLocalizedString("intro_p4_title", comment: "Title of Intro Page 4")
+        page4.desc = NSLocalizedString("intro_p4_notes", comment: "Description for Intro Page 4")
         page4.titleIconView = UIImageView(image: UIImage(named: "Phone and Gestures"))
         page4.bgColor = UIColor.blackColor()
         
         var page5: EAIntroPage = EAIntroPage()
-        page5.title = "Settings"
-        page5.desc = "To access the settings menu, touch and hold the screen for a few seconds. You'll see a red bar appear. When it turns green, stop touching the screen, and the settings screen will load."
+        page5.title = NSLocalizedString("intro_p5_title", comment: "Title of Intro Page 5")
+        page5.desc = NSLocalizedString("intro_p5_notes", comment: "Description for Intro Page 5")
         page5.titleIconView = UIImageView(image: UIImage(named: "Phone and Touch"))
         page5.bgColor = UIColor.blackColor()
 
         var page6: EAIntroPage = EAIntroPage()
-        page6.title = "Have Fun!"
-        page6.desc = "If you need any assistance or have any feedback, you can contact us at support@azukiapps.co.uk."
+        page6.title = NSLocalizedString("intro_p6_title", comment: "Title of Intro Page 6")
+        page6.desc = NSLocalizedString("intro_p6_notes", comment: "Description for Intro Page 6")
         page6.titleIconView = UIImageView(image: UIImage(named: "Phone and Tick"))
         page6.bgColor = UIColor.blackColor()
         

@@ -12,6 +12,7 @@
 		C53245D51AC95DE000390D2B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53245D31AC95DE000390D2B /* LaunchScreen.xib */; };
 		C53245E11AC95DE100390D2B /* kidsvidsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53245E01AC95DE100390D2B /* kidsvidsTests.swift */; };
 		C5A12E161ADC3826009C480F /* changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5A12E151ADC3826009C480F /* changelog.txt */; };
+		C5A18C121ADF2BF8006D118D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5A18C141ADF2BF8006D118D /* Localizable.strings */; };
 		C5A682E11AC96CBE00F8E347 /* GridCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682E01AC96CBE00F8E347 /* GridCollectionViewController.swift */; };
 		C5A682E31AC96CE400F8E347 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682E21AC96CE400F8E347 /* Playlist.swift */; };
 		C5A682E61AC96E2D00F8E347 /* PlaylistCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A682E51AC96E2D00F8E347 /* PlaylistCollection.swift */; };
@@ -51,6 +52,10 @@
 		C53245DF1AC95DE100390D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C53245E01AC95DE100390D2B /* kidsvidsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kidsvidsTests.swift; sourceTree = "<group>"; };
 		C5A12E151ADC3826009C480F /* changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog.txt; sourceTree = "<group>"; };
+		C5A18C0F1ADF2B52006D118D /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C5A18C131ADF2BF8006D118D /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C5A18C151ADF2DF9006D118D /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C5A18C171ADF329D006D118D /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C5A682E01AC96CBE00F8E347 /* GridCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewController.swift; sourceTree = "<group>"; };
 		C5A682E21AC96CE400F8E347 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		C5A682E51AC96E2D00F8E347 /* PlaylistCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollection.swift; sourceTree = "<group>"; };
@@ -139,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				C53245C91AC95DE000390D2B /* Info.plist */,
+				C5A18C141ADF2BF8006D118D /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -276,6 +282,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = C53245BC1AC95DE000390D2B;
 			productRefGroup = C53245C61AC95DE000390D2B /* Products */;
@@ -294,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5A12E161ADC3826009C480F /* changelog.txt in Resources */,
+				C5A18C121ADF2BF8006D118D /* Localizable.strings in Resources */,
 				C53245D51AC95DE000390D2B /* LaunchScreen.xib in Resources */,
 				C53245D21AC95DE000390D2B /* Images.xcassets in Resources */,
 			);
@@ -412,8 +420,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				C53245D41AC95DE000390D2B /* Base */,
+				C5A18C0F1ADF2B52006D118D /* fr */,
+				C5A18C171ADF329D006D118D /* en */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		C5A18C141ADF2BF8006D118D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C5A18C131ADF2BF8006D118D /* en */,
+				C5A18C151ADF2DF9006D118D /* fr */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
